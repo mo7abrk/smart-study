@@ -1,0 +1,1966 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="html-root">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>المرافق الذكي للدراسة - Smart Study Companion Pro</title>
+
+  <!-- PWA: makes the app installable with its own icon, standalone launch
+       (no browser address bar), and offline support via the service worker
+       registered near the end of <body>. -->
+  <link rel="manifest" href="./manifest.json">
+  <meta name="theme-color" content="#0a0a10">
+  <link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png">
+  <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
+
+  <!-- iOS-specific: Safari does not read manifest.json for "Add to Home
+       Screen" behavior, so these are still required for a proper standalone
+       launch and correct title/icon on iPhone/iPad. -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="الدراسة الذكية">
+
+  <!-- Modern Android/Chrome equivalent of the apple-mobile-web-app-capable tag. -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.25.6/babel.min.js" crossorigin="anonymous"></script>
+  <!-- Tailwind: compiled ahead of time with the Tailwind CLI and inlined below,
+       instead of the runtime Play CDN (cdn.tailwindcss.com), which Tailwind's own
+       docs say not to use in production. -->
+  <style>
+*,:after,:before{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/*! tailwindcss v3.4.19 | MIT License | https://tailwindcss.com*/*,:after,:before{box-sizing:border-box;border:0 solid #e5e7eb}:after,:before{--tw-content:""}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;-o-tab-size:4;tab-size:4;font-family:ui-sans-serif,system-ui,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0}fieldset,legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::-moz-placeholder,textarea::-moz-placeholder{opacity:1;color:#9ca3af}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.pointer-events-none{pointer-events:none}.static{position:static}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.inset-0{inset:0}.left-1\/4{left:25%}.right-5{right:1.25rem}.top-5{top:1.25rem}.top-\[-100px\]{top:-100px}.z-10{z-index:10}.z-50{z-index:50}.mx-auto{margin-left:auto;margin-right:auto}.mb-1{margin-bottom:.25rem}.mb-2{margin-bottom:.5rem}.mb-3{margin-bottom:.75rem}.mb-4{margin-bottom:1rem}.mb-6{margin-bottom:1.5rem}.mb-8{margin-bottom:2rem}.mt-0\.5{margin-top:.125rem}.mt-1{margin-top:.25rem}.mt-3{margin-top:.75rem}.mt-4{margin-top:1rem}.mt-6{margin-top:1.5rem}.block{display:block}.inline-block{display:inline-block}.flex{display:flex}.grid{display:grid}.hidden{display:none}.h-1\.5{height:.375rem}.h-11{height:2.75rem}.h-14{height:3.5rem}.h-2{height:.5rem}.h-3{height:.75rem}.h-4{height:1rem}.h-52{height:13rem}.h-64{height:16rem}.h-\[500px\]{height:500px}.h-full{height:100%}.max-h-\[85vh\]{max-height:85vh}.min-h-\[300px\]{min-height:300px}.min-h-screen{min-height:100vh}.w-1\/2{width:50%}.w-11{width:2.75rem}.w-14{width:3.5rem}.w-16{width:4rem}.w-3{width:.75rem}.w-4{width:1rem}.w-64{width:16rem}.w-\[500px\]{width:500px}.w-full{width:100%}.max-w-2xl{max-width:42rem}.max-w-5xl{max-width:64rem}.max-w-\[16px\]{max-width:16px}.max-w-lg{max-width:32rem}.max-w-md{max-width:28rem}.flex-1{flex:1 1 0%}.scale-110{--tw-scale-x:1.1;--tw-scale-y:1.1}.scale-110,.transform{transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}@keyframes bounce{0%,to{transform:translateY(-25%);animation-timing-function:cubic-bezier(.8,0,1,1)}50%{transform:none;animation-timing-function:cubic-bezier(0,0,.2,1)}}.animate-bounce{animation:bounce 1s infinite}@keyframes pulse{50%{opacity:.5}}.animate-pulse{animation:pulse 2s cubic-bezier(.4,0,.6,1) infinite}.cursor-pointer{cursor:pointer}.select-none{-webkit-user-select:none;-moz-user-select:none;user-select:none}.grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))}.grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}.grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-start{align-items:flex-start}.items-end{align-items:flex-end}.items-center{align-items:center}.justify-end{justify-content:flex-end}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-1{gap:.25rem}.gap-1\.5{gap:.375rem}.gap-2{gap:.5rem}.gap-3{gap:.75rem}.gap-4{gap:1rem}.gap-6{gap:1.5rem}.space-y-2>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.5rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.5rem*var(--tw-space-y-reverse))}.space-y-4>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem*var(--tw-space-y-reverse))}.space-y-6>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem*var(--tw-space-y-reverse))}.overflow-hidden{overflow:hidden}.overflow-y-auto{overflow-y:auto}.rounded-2xl{border-radius:1rem}.rounded-3xl{border-radius:1.5rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:.5rem}.rounded-xl{border-radius:.75rem}.rounded-t-lg{border-top-left-radius:.5rem;border-top-right-radius:.5rem}.border{border-width:1px}.border-4{border-width:4px}.border-amber-500\/20{border-color:rgba(245,158,11,.2)}.border-amber-500\/30{border-color:rgba(245,158,11,.3)}.border-amber-500\/40{border-color:rgba(245,158,11,.4)}.border-blue-500\/20{border-color:rgba(59,130,246,.2)}.border-blue-500\/30{border-color:rgba(59,130,246,.3)}.border-cyan-500\/40{border-color:rgba(6,182,212,.4)}.border-emerald-500\/20{border-color:rgba(16,185,129,.2)}.border-emerald-500\/30{border-color:rgba(16,185,129,.3)}.border-emerald-500\/40{border-color:rgba(16,185,129,.4)}.border-indigo-500\/40{border-color:rgba(99,102,241,.4)}.border-purple-400\/30{border-color:rgba(192,132,252,.3)}.border-red-500\/20{border-color:rgba(239,68,68,.2)}.border-red-500\/30{border-color:rgba(239,68,68,.3)}.border-red-500\/40{border-color:rgba(239,68,68,.4)}.border-white\/10{border-color:hsla(0,0%,100%,.1)}.border-white\/20{border-color:hsla(0,0%,100%,.2)}.border-white\/5{border-color:hsla(0,0%,100%,.05)}.bg-amber-500{--tw-bg-opacity:1;background-color:rgb(245 158 11/var(--tw-bg-opacity,1))}.bg-amber-500\/10{background-color:rgba(245,158,11,.1)}.bg-amber-500\/15{background-color:rgba(245,158,11,.15)}.bg-amber-500\/20{background-color:rgba(245,158,11,.2)}.bg-amber-500\/5{background-color:rgba(245,158,11,.05)}.bg-amber-600{--tw-bg-opacity:1;background-color:rgb(217 119 6/var(--tw-bg-opacity,1))}.bg-amber-600\/30{background-color:rgba(217,119,6,.3)}.bg-black\/20{background-color:rgba(0,0,0,.2)}.bg-black\/40{background-color:rgba(0,0,0,.4)}.bg-black\/80{background-color:rgba(0,0,0,.8)}.bg-blue-500{--tw-bg-opacity:1;background-color:rgb(59 130 246/var(--tw-bg-opacity,1))}.bg-blue-500\/10{background-color:rgba(59,130,246,.1)}.bg-blue-500\/15{background-color:rgba(59,130,246,.15)}.bg-cyan-400{--tw-bg-opacity:1;background-color:rgb(34 211 238/var(--tw-bg-opacity,1))}.bg-cyan-500{--tw-bg-opacity:1;background-color:rgb(6 182 212/var(--tw-bg-opacity,1))}.bg-cyan-500\/20{background-color:rgba(6,182,212,.2)}.bg-cyan-500\/30{background-color:rgba(6,182,212,.3)}.bg-emerald-500{--tw-bg-opacity:1;background-color:rgb(16 185 129/var(--tw-bg-opacity,1))}.bg-emerald-500\/10{background-color:rgba(16,185,129,.1)}.bg-emerald-500\/15{background-color:rgba(16,185,129,.15)}.bg-emerald-600\/30{background-color:rgba(5,150,105,.3)}.bg-gray-900{--tw-bg-opacity:1;background-color:rgb(17 24 39/var(--tw-bg-opacity,1))}.bg-indigo-500\/20{background-color:rgba(99,102,241,.2)}.bg-purple-500{--tw-bg-opacity:1;background-color:rgb(168 85 247/var(--tw-bg-opacity,1))}.bg-purple-600\/15{background-color:rgba(147,51,234,.15)}.bg-purple-600\/30{background-color:rgba(147,51,234,.3)}.bg-red-500{--tw-bg-opacity:1;background-color:rgb(239 68 68/var(--tw-bg-opacity,1))}.bg-red-500\/10{background-color:rgba(239,68,68,.1)}.bg-red-500\/15{background-color:rgba(239,68,68,.15)}.bg-red-500\/20{background-color:rgba(239,68,68,.2)}.bg-white\/10{background-color:hsla(0,0%,100%,.1)}.bg-white\/5{background-color:hsla(0,0%,100%,.05)}.bg-gradient-to-r{background-image:linear-gradient(to right,var(--tw-gradient-stops))}.bg-gradient-to-t{background-image:linear-gradient(to top,var(--tw-gradient-stops))}.from-cyan-600{--tw-gradient-from:#0891b2 var(--tw-gradient-from-position);--tw-gradient-to:rgba(8,145,178,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.from-purple-600{--tw-gradient-from:#9333ea var(--tw-gradient-from-position);--tw-gradient-to:rgba(147,51,234,0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}.to-cyan-400{--tw-gradient-to:#22d3ee var(--tw-gradient-to-position)}.to-indigo-600{--tw-gradient-to:#4f46e5 var(--tw-gradient-to-position)}.p-0\.5{padding:.125rem}.p-1\.5{padding:.375rem}.p-10{padding:2.5rem}.p-2{padding:.5rem}.p-3{padding:.75rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.p-6{padding:1.5rem}.p-8{padding:2rem}.px-1{padding-left:.25rem;padding-right:.25rem}.px-2{padding-left:.5rem;padding-right:.5rem}.px-3{padding-left:.75rem;padding-right:.75rem}.px-3\.5{padding-left:.875rem;padding-right:.875rem}.px-4{padding-left:1rem;padding-right:1rem}.py-0\.5{padding-top:.125rem;padding-bottom:.125rem}.py-1{padding-top:.25rem;padding-bottom:.25rem}.py-1\.5{padding-top:.375rem;padding-bottom:.375rem}.py-2{padding-top:.5rem;padding-bottom:.5rem}.py-2\.5{padding-top:.625rem;padding-bottom:.625rem}.py-3{padding-top:.75rem;padding-bottom:.75rem}.py-3\.5{padding-top:.875rem;padding-bottom:.875rem}.py-4{padding-top:1rem;padding-bottom:1rem}.pb-2{padding-bottom:.5rem}.pt-2{padding-top:.5rem}.pt-8{padding-top:2rem}.text-center{text-align:center}.font-mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace}.text-2xl{font-size:1.5rem;line-height:2rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-6xl{font-size:3.75rem;line-height:1}.text-\[10px\]{font-size:10px}.text-\[11px\]{font-size:11px}.text-base{font-size:1rem;line-height:1.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:.75rem;line-height:1rem}.font-bold{font-weight:700}.font-extrabold{font-weight:800}.font-medium{font-weight:500}.font-semibold{font-weight:600}.leading-relaxed{line-height:1.625}.tracking-wide{letter-spacing:.025em}.tracking-wider{letter-spacing:.05em}.text-amber-200{--tw-text-opacity:1;color:rgb(253 230 138/var(--tw-text-opacity,1))}.text-amber-300{--tw-text-opacity:1;color:rgb(252 211 77/var(--tw-text-opacity,1))}.text-amber-400{--tw-text-opacity:1;color:rgb(251 191 36/var(--tw-text-opacity,1))}.text-blue-300{--tw-text-opacity:1;color:rgb(147 197 253/var(--tw-text-opacity,1))}.text-blue-400{--tw-text-opacity:1;color:rgb(96 165 250/var(--tw-text-opacity,1))}.text-cyan-200{--tw-text-opacity:1;color:rgb(165 243 252/var(--tw-text-opacity,1))}.text-cyan-300{--tw-text-opacity:1;color:rgb(103 232 249/var(--tw-text-opacity,1))}.text-emerald-200{--tw-text-opacity:1;color:rgb(167 243 208/var(--tw-text-opacity,1))}.text-emerald-300{--tw-text-opacity:1;color:rgb(110 231 183/var(--tw-text-opacity,1))}.text-emerald-400{--tw-text-opacity:1;color:rgb(52 211 153/var(--tw-text-opacity,1))}.text-gray-100{--tw-text-opacity:1;color:rgb(243 244 246/var(--tw-text-opacity,1))}.text-gray-200{--tw-text-opacity:1;color:rgb(229 231 235/var(--tw-text-opacity,1))}.text-gray-300{--tw-text-opacity:1;color:rgb(209 213 219/var(--tw-text-opacity,1))}.text-gray-400{--tw-text-opacity:1;color:rgb(156 163 175/var(--tw-text-opacity,1))}.text-gray-400\/80{color:rgba(156,163,175,.8)}.text-gray-500{--tw-text-opacity:1;color:rgb(107 114 128/var(--tw-text-opacity,1))}.text-indigo-200{--tw-text-opacity:1;color:rgb(199 210 254/var(--tw-text-opacity,1))}.text-indigo-300{--tw-text-opacity:1;color:rgb(165 180 252/var(--tw-text-opacity,1))}.text-purple-200{--tw-text-opacity:1;color:rgb(233 213 255/var(--tw-text-opacity,1))}.text-red-300{--tw-text-opacity:1;color:rgb(252 165 165/var(--tw-text-opacity,1))}.text-red-400{--tw-text-opacity:1;color:rgb(248 113 113/var(--tw-text-opacity,1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.opacity-40{opacity:.4}.opacity-50{opacity:.5}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgba(0,0,0,.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color)}.shadow-2xl,.shadow-inner{box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-inner{--tw-shadow:inset 0 2px 4px 0 rgba(0,0,0,.05);--tw-shadow-colored:inset 0 2px 4px 0 var(--tw-shadow-color)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -4px rgba(0,0,0,.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color),0 4px 6px -4px var(--tw-shadow-color)}.shadow-lg,.shadow-xl{box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-xl{--tw-shadow:0 20px 25px -5px rgba(0,0,0,.1),0 8px 10px -6px rgba(0,0,0,.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color),0 8px 10px -6px var(--tw-shadow-color)}.shadow-cyan-500\/30{--tw-shadow-color:rgba(6,182,212,.3);--tw-shadow:var(--tw-shadow-colored)}.shadow-purple-600\/30{--tw-shadow-color:rgba(147,51,234,.3);--tw-shadow:var(--tw-shadow-colored)}.ring-2{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow,0 0 #0000)}.ring-white{--tw-ring-opacity:1;--tw-ring-color:rgb(255 255 255/var(--tw-ring-opacity,1))}.blur{--tw-blur:blur(8px)}.blur,.blur-\[120px\]{filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.blur-\[120px\]{--tw-blur:blur(120px)}.filter{filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.backdrop-blur-md{--tw-backdrop-blur:blur(12px)}.backdrop-blur-md,.backdrop-filter{-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition{transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,-webkit-backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter,-webkit-backdrop-filter;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.duration-500{transition-duration:.5s}.ease-out{transition-timing-function:cubic-bezier(0,0,.2,1)}.selection\:bg-purple-500 ::-moz-selection{--tw-bg-opacity:1;background-color:rgb(168 85 247/var(--tw-bg-opacity,1))}.selection\:bg-purple-500 ::selection{--tw-bg-opacity:1;background-color:rgb(168 85 247/var(--tw-bg-opacity,1))}.selection\:text-white ::-moz-selection{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.selection\:text-white ::selection{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.selection\:bg-purple-500::-moz-selection{--tw-bg-opacity:1;background-color:rgb(168 85 247/var(--tw-bg-opacity,1))}.selection\:bg-purple-500::selection{--tw-bg-opacity:1;background-color:rgb(168 85 247/var(--tw-bg-opacity,1))}.selection\:text-white::-moz-selection{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.selection\:text-white::selection{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.hover\:border-white\/30:hover{border-color:hsla(0,0%,100%,.3)}.hover\:bg-amber-500\/30:hover{background-color:rgba(245,158,11,.3)}.hover\:bg-amber-600\/50:hover{background-color:rgba(217,119,6,.5)}.hover\:bg-emerald-600\/50:hover{background-color:rgba(5,150,105,.5)}.hover\:bg-purple-600\/50:hover{background-color:rgba(147,51,234,.5)}.hover\:bg-red-500\/20:hover{background-color:rgba(239,68,68,.2)}.hover\:bg-white\/10:hover{background-color:hsla(0,0%,100%,.1)}.hover\:bg-white\/20:hover{background-color:hsla(0,0%,100%,.2)}.hover\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.hover\:opacity-80:hover{opacity:.8}.focus\:border-white\/40:focus{border-color:hsla(0,0%,100%,.4)}.focus\:outline-none:focus{outline:2px solid transparent;outline-offset:2px}.group:hover .group-hover\:bg-cyan-400\/60{background-color:rgba(34,211,238,.6)}.group:hover .group-hover\:opacity-70{opacity:.7}@media (min-width:768px){.md\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.md\:p-10{padding:2.5rem}.md\:p-8{padding:2rem}}
+  </style>
+  <!-- NOTE: React/Babel versions below are pinned (not "@18"/latest) to avoid silently
+       pulling in an unreviewed upstream update. For a stricter production deploy,
+       vendor these files locally and/or add Subresource Integrity hashes. -->
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap');
+    body { 
+      background-color: #0a0a10; 
+      color: #f3f4f6; 
+      font-family: 'Cairo', system-ui, -apple-system, sans-serif;
+      overflow-x: hidden;
+    }
+    .glass-panel {
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .glass-panel-hover:hover {
+      background: rgba(255, 255, 255, 0.06);
+    }
+    
+    .theme-purple {
+      --primary-gradient-from: #8b5cf6;
+      --primary-gradient-to: #4f46e5;
+      --primary-border: rgba(139, 92, 246, 0.4);
+      --primary-bg-alpha: rgba(139, 92, 246, 0.15);
+      --primary-text: #c4b5fd;
+    }
+    .theme-cyan {
+      --primary-gradient-from: #06b6d4;
+      --primary-gradient-to: #2563eb;
+      --primary-border: rgba(6, 182, 212, 0.4);
+      --primary-bg-alpha: rgba(6, 182, 212, 0.15);
+      --primary-text: #a5f3fc;
+    }
+    .theme-emerald {
+      --primary-gradient-from: #10b981;
+      --primary-gradient-to: #059669;
+      --primary-border: rgba(16, 185, 129, 0.4);
+      --primary-bg-alpha: rgba(16, 185, 129, 0.15);
+      --primary-text: #a7f3d0;
+    }
+
+    .theme-btn {
+      background: linear-gradient(to right, var(--primary-gradient-from), var(--primary-gradient-to));
+    }
+    .theme-border { border-color: var(--primary-border); }
+    .theme-text { color: var(--primary-text); }
+    .theme-bg-alpha { background-color: var(--primary-bg-alpha); }
+    
+    .confetti-particle {
+      position: fixed;
+      pointer-events: none;
+      z-index: 100;
+      animation: fall 2.5s ease-out forwards;
+    }
+    @keyframes fall {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+    }
+
+    /* LIGHT MODE: overrides the dark-first design. The component markup uses
+       Tailwind's dark-palette utility classes directly (bg-white/5, text-gray-400,
+       text-white, etc.) rather than dark: variants, so we override those utilities
+       by selector specificity when body.light-mode is active, instead of rewriting
+       every className in the app. */
+    body.light-mode {
+      background-color: #f4f4f7;
+      color: #1f2937;
+    }
+    body.light-mode .glass-panel {
+      background: rgba(0, 0, 0, 0.025);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+    }
+    body.light-mode .glass-panel-hover:hover {
+      background: rgba(0, 0, 0, 0.05);
+    }
+    body.light-mode .bg-white\/5,
+    body.light-mode .bg-white\/10,
+    body.light-mode .bg-black\/20,
+    body.light-mode .bg-black\/40,
+    body.light-mode .bg-black\/80 {
+      background-color: rgba(0, 0, 0, 0.045) !important;
+    }
+    body.light-mode .border-white\/5,
+    body.light-mode .border-white\/10,
+    body.light-mode .border-white\/20 {
+      border-color: rgba(0, 0, 0, 0.12) !important;
+    }
+    body.light-mode .text-white { color: #111827 !important; }
+    body.light-mode .text-gray-100,
+    body.light-mode .text-gray-200,
+    body.light-mode .text-gray-300 { color: #374151 !important; }
+    body.light-mode .text-gray-400,
+    body.light-mode .text-gray-400\/80,
+    body.light-mode .text-gray-500 { color: #6b7280 !important; }
+    body.light-mode select option { background: #fff; color: #111827; }
+    body.light-mode input,
+    body.light-mode textarea { color: #111827; }
+    body.light-mode input::placeholder,
+    body.light-mode textarea::placeholder { color: #9ca3af; }
+    body.light-mode .fixed.inset-0.bg-black\/80 { background: rgba(15, 15, 20, 0.55) !important; }
+  </style>
+</head>
+<body class="theme-purple">
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect, useRef } = React;
+
+    const translations = {
+      ar: {
+        appName: "المرافق الذكي للدراسة",
+        soundOn: "الصوت مفعل",
+        soundOff: "مكتوم",
+        hapticsOn: "الاهتزاز",
+        hapticsOff: "توقف",
+        tabDecks: "🎴 البطاقات (SRS)",
+        tabPomodoro: "⏱️ البومودورو",
+        tabAnalytics: "📊 التحليلات",
+        tabBadges: "🏆 الشارات",
+        helpBtn: "❓ دليل الاستعمال",
+        decksTitle: "مجموعات البطاقات الدراسية",
+        newDeckBtn: "مجموعة جديدة",
+        addCardBtn: "إضافة بطاقة",
+        aiGeneratorBtn: "🤖 مساعد الذكاء الاصطناعي",
+        importBtn: "📥 إستيراد",
+        cardsCount: "بطاقات",
+        startReview: "ابدأ المراجعة",
+        timeAttackReview: "⚡ تحدي الوقت السريع",
+        audioModeReview: "🎧 وضع الاستماع الصوتي",
+        deleteDeck: "حذف المجموعة",
+        confirmDeleteDeck: "هل أنت تأكد من حذف هذه المجموعة بكافة بطاتها؟",
+        cancelReview: "إلغاء المراجعة ✕",
+        cardFront: "السؤال (Front)",
+        cardBack: "الإجابة (Back)",
+        flipHint: "اضغط في أي مكان لقلب البطاقة 🔄 (أو اسحب يميناً/يساراً للانتقال)",
+        again: "إعادة",
+        hard: "صعب",
+        good: "جيد",
+        easy: "سهل ممتاز",
+        focusMode: "تركيز",
+        shortBreakMode: "راحة قصيرة",
+        longBreakMode: "راحة طويلة",
+        customTime: "⏱️ تخصيص الوقت (دقائق):",
+        startTimer: "ابدأ الجلسة الآن ▶️",
+        pauseTimer: "إيقاف مؤقت ⏸️",
+        resetTimer: "إعادة ضبط 🔄",
+        minutes: "دقيقة",
+        weeklyActivity: "📈 نشاط المذاكرة الأسبوعي",
+        addCardTitle: "➕ إضافة بطاقة تعليمية جديدة",
+        aiGenTitle: "🤖 مساعد الذكاء الاصطناعي لتوليد البطاقات",
+        aiGenHint: "التطبيق لا يتصل بأي ذكاء اصطناعي بنفسه (لتفادي الحاجة لمفتاح API مكشوف في الملف). بدلاً من ذلك: انسخ البرومبت أدناه، استخدمه في أي نموذج ذكاء اصطناعي تفضّله مع الملف الذي تريد تحويله، ثم الصق رده هنا.",
+        aiStep1Title: "الخطوة 1: انسخ هذا البرومبت",
+        aiStep1Desc: "الصقه في أي نموذج ذكاء اصطناعي تستخدمه عادة (ChatGPT أو Claude أو Gemini وغيرها)، مع إرفاق أو لصق محتوى الملف الذي تريد تحويله إلى بطاقات.",
+        copyPromptBtn: "📋 نسخ البرومبت",
+        promptCopiedMsg: "✅ تم النسخ!",
+        aiStep2Title: "الخطوة 2: الصق رد الذكاء الاصطناعي هنا",
+        aiStep2Desc: "بعد حصولك على الرد، انسخه بالكامل كما هو والصقه في الحقل أدناه — سنحوّله تلقائياً إلى بطاقات جاهزة.",
+        convertToCardsBtn: "🔄 حوّل الرد إلى بطاقات",
+        aiPromptTemplate: `سأرسل لك محتوى مستند دراسي (نص، فصل من كتاب، محاضرة). حوّله إلى بطاقات تعليمية (سؤال وجواب) لنظام مراجعة متباعدة (Spaced Repetition).
+
+التعليمات:
+1. اقرأ المحتوى واستخرج المفاهيم والحقائق الأساسية فقط (تجاهل التفاصيل الثانوية).
+2. بطاقة واحدة لكل مفهوم مهم؛ لا تُجمّع عدة مفاهيم في بطاقة واحدة، ولا تُقسّم مفهوماً واحداً إلى عدة بطاقات.
+3. اجعل كل سؤال واضحاً بذاته دون الإشارة إلى "المستند" أو "النص أعلاه".
+4. اكتب الجواب كاملاً ومباشراً دون حشو.
+5. اجعل عدد البطاقات مناسباً لحجم المحتوى (5 إلى 40 بطاقة عادةً).
+6. حافظ على نفس لغة المستند الأصلي في الأسئلة والأجوبة.
+
+صيغة الإخراج (إلزامية، لا تخرج عنها):
+أعد فقط مصفوفة JSON صالحة، بدون أي نص إضافي قبلها أو بعدها، وبدون علامات الاقتباس الثلاثية، بهذا الشكل بالضبط:
+[
+  {"front": "نص السؤال", "back": "نص الجواب"},
+  {"front": "...", "back": "..."}
+]
+
+المستند المطلوب تحويله (سألصقه أو أرفقه أدناه):`,
+        aiGenPlaceholder: "ألصق هنا رد الذكاء الاصطناعي بالكامل (يجب أن يكون مصفوفة JSON كما طلب البرومبت)...",
+        selectDeck: "اختر المجموعة:",
+        frontLabel: "السؤال (الوجه الأمامي):",
+        backLabel: "الإجابة (الوجه الخلفي):",
+        saveCard: "حفظ البطاقة",
+        addDeckTitle: "➕ إضافة مجموعة دراسية جديدة",
+        deckNameLabel: "اسم المجموعة / المادة:",
+        deckDescLabel: "وصف مختصر:",
+        createDeck: "إنشاء المجموعة",
+        importTitle: "📥 إستيراد بطاقات من الخارج",
+        importHint: "يمكنك إدخال البيانات بصيغة CSV أو JSON:",
+        processImport: "إستيراد الآن",
+        guideTitle: "📖 دليل استعمال المرافق الذكي للدراسة",
+        guideUnderstandBtn: "فهمت ذلك، ابدأ الآن",
+        guideSec1Title: "1. التكرار المتباعد وتحدي الوقت (SM-2 & Time Attack)",
+        guideSec1Desc: "خوارزمية SM-2 لتنظيم مواعيد المراجعة، بالإضافة لتحدي الوقت السريع لزيادة سرعة البديهة والتركيز.",
+        guideSec2Title: "2. مساعد الذكاء الاصطناعي والاستماع الصوتي",
+        guideSec2Desc: "انسخ برومبتاً جاهزاً واستخدمه في نموذج الذكاء الاصطناعي الذي تفضله مع ملفك، ثم الصق رده في التطبيق ليتحول تلقائياً إلى بطاقات — أو شغّل وضع الاستماع الصوتي التلقائي أثناء التنقل.",
+        guideSec3Title: "3. السلسلة اليومية والإنجازات",
+        guideSec3Desc: "حافظ على سلسلة الأيام المتتالية (Streak) وافتح الشارات الاحترافية لرفع الإنتاجية.",
+        guideSec4Title: "4. النقل بين الأجهزة (بدون حساب سحابي)",
+        guideSec4Desc: "كل بياناتك محفوظة محلياً في هذا الجهاز فقط. لنقلها لجهاز آخر: اضغط 'تصدير النسخة' واحفظ الملف في تطبيق مثل Google Drive أو iCloud، ثم افتح التطبيق على الجهاز الآخر واضغط 'استرجاع النسخة'. مزامنة تلقائية عبر حساب تتطلب خادوماً خارجياً وهذا خارج نطاق تطبيق بملف واحد كهذا.",
+        cancel: "إلغاء",
+        weekDays: ["الأحد", "الإثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"],
+        sessionCycle: "الجلسة المكتملة:",
+        masteryRate: "معدل التمكن الإجمالي:",
+        cardsBreakdown: "توزيع حالة البطاقات التفاعلي",
+        newCards: "بطاقات جديدة",
+        learningCards: "قيد المراجعة",
+        masteredCards: "تم إتقانها",
+        legendMinutes: "دقائق التركيز",
+        legendCards: "البطاقات المراجعة",
+        exportData: "💾 تصدير النسخة",
+        importData: "📂 استرجاع النسخة",
+        difficultyIndex: "مستوى صعوبة المادة:",
+        speakCard: "🔊 قراءة بصوت عالي",
+        themeLabel: "مظهر النيون:",
+        unlockedTag: "مكتمل 🏆",
+        streakLabel: "سلسلة الأيام:",
+        streakDays: "أيام متتالية 🔥",
+        audioModeActive: "🎧 جاري التشغيل الصوتي التلقائي...",
+        stopAudioMode: "إيقاف الاستماع الصوتي",
+        imageUrlLabel: "رابط صورة (اختياري):",
+        manageCards: "🗂️ إدارة البطاقات",
+        editCard: "تعديل",
+        deleteCard: "حذف",
+        saveChanges: "حفظ التعديلات",
+        searchCardsPlaceholder: "🔍 ابحث في البطاقات...",
+        noCardsFound: "لا توجد بطاقات مطابقة",
+        closeBtn: "إغلاق",
+        dueTodayBadge: "مستحقة اليوم",
+        reviewDueOnlyBtn: "المستحقة فقط",
+        reviewAllCardsBtn: "كل البطاقات",
+        exportDeckBtn: "تصدير هذه المجموعة",
+        retentionRate: "معدل الاحتفاظ بالمعلومات:",
+        lightModeBtn: "☀️ فاتح",
+        darkModeBtn: "🌙 داكن",
+        reminderBannerText: "لم تراجع بطاقاتك اليوم بعد! حافظ على سلسلتك 🔥",
+        reminderDismiss: "إخفاء",
+        trophies: [
+          { id: 'b1', title: 'بداية الشغف', desc: 'إتمام أول جلسة بومودورو بنجاح', icon: '⚡' },
+          { id: 'b2', title: 'خبير التكرار', desc: 'مراجعة أكثر من 20 بطاقة تعليمية', icon: '🎯' },
+          { id: 'b3', title: 'سيد التركيز', desc: 'تسجيل أكثر من 60 دقيقة دراسة', icon: '🔥' },
+          { id: 'b4', title: 'الإتقان الكامل', desc: 'إتقان أكثر من 5 بطاقات بالكامل', icon: '🏆' }
+        ]
+      },
+      en: {
+        appName: "Smart Study Companion",
+        soundOn: "Sound On",
+        soundOff: "Muted",
+        hapticsOn: "Haptics On",
+        hapticsOff: "Haptics Off",
+        tabDecks: "🎴 Decks (SRS)",
+        tabPomodoro: "⏱️ Pomodoro",
+        tabAnalytics: "📊 Analytics",
+        tabBadges: "🏆 Badges",
+        helpBtn: "❓ User Guide",
+        decksTitle: "Study Decks",
+        newDeckBtn: "New Deck",
+        addCardBtn: "Add Card",
+        aiGeneratorBtn: "🤖 AI Assistant",
+        importBtn: "📥 Import",
+        cardsCount: "cards",
+        startReview: "Start Review",
+        timeAttackReview: "⚡ Time Attack Mode",
+        audioModeReview: "🎧 Audio-Only Mode",
+        deleteDeck: "Delete Deck",
+        confirmDeleteDeck: "Are you sure you want to delete this deck and all its cards?",
+        cancelReview: "Cancel Review ✕",
+        cardFront: "Question (Front)",
+        cardBack: "Answer (Back)",
+        flipHint: "Click anywhere to flip card 🔄 (or swipe left/right to skip)",
+        again: "Again",
+        hard: "Hard",
+        good: "Good",
+        easy: "Easy",
+        focusMode: "Focus",
+        shortBreakMode: "Short Break",
+        longBreakMode: "Long Break",
+        customTime: "⏱️ Custom Time (Minutes):",
+        startTimer: "Start Session Now ▶️",
+        pauseTimer: "Pause Timer ⏸️",
+        resetTimer: "Reset 🔄",
+        minutes: "mins",
+        weeklyActivity: "📈 Weekly Study Activity",
+        addCardTitle: "➕ Add New Flashcard",
+        aiGenTitle: "🤖 AI Generator Assistant",
+        aiGenHint: "This app never calls an AI model on its own (that would require exposing a personal API key inside the file). Instead: copy the prompt below, use it with any AI tool you prefer along with the document you want converted, then paste its reply here.",
+        aiStep1Title: "Step 1: Copy this prompt",
+        aiStep1Desc: "Paste it into any AI tool you normally use (ChatGPT, Claude, Gemini, etc.), along with the document you want turned into flashcards.",
+        copyPromptBtn: "📋 Copy Prompt",
+        promptCopiedMsg: "✅ Copied!",
+        aiStep2Title: "Step 2: Paste the AI's reply here",
+        aiStep2Desc: "Once you get the reply, copy it in full exactly as-is and paste it in the field below — it will be converted into ready-made cards automatically.",
+        convertToCardsBtn: "🔄 Convert Reply to Cards",
+        aiPromptTemplate: `I'll give you the content of a study document (text, a book chapter, lecture notes). Convert it into flashcards (question and answer) for a spaced-repetition study system.
+
+Instructions:
+1. Read the content and extract only the core concepts and facts (skip minor details).
+2. One card per important concept — don't merge several concepts into one card, and don't split a single concept into several cards.
+3. Each question must be understandable on its own, without referring to "the document" or "the text above".
+4. Write the answer fully and directly, no filler.
+5. Keep the number of cards proportional to the content size (typically 5 to 40 cards).
+6. Keep the questions and answers in the same language as the original document.
+
+Output format (mandatory, do not deviate):
+Return only a valid JSON array, with no extra text before or after it, and no triple-backtick fences, in exactly this shape:
+[
+  {"front": "question text", "back": "answer text"},
+  {"front": "...", "back": "..."}
+]
+
+The document to convert (I'll paste or attach it below):`,
+        aiGenPlaceholder: "Paste the AI's full reply here (should be a JSON array, as requested in the prompt)...",
+        selectDeck: "Select Deck:",
+        frontLabel: "Question (Front Face):",
+        backLabel: "Answer (Back Face):",
+        saveCard: "Save Card",
+        addDeckTitle: "➕ Add New Study Deck",
+        deckNameLabel: "Deck / Subject Title:",
+        deckDescLabel: "Short Description:",
+        createDeck: "Create Deck",
+        importTitle: "📥 Import Flashcards",
+        importHint: "Paste CSV or JSON format:",
+        processImport: "Import Now",
+        guideTitle: "📖 Smart Study Companion User Guide",
+        guideUnderstandBtn: "Got it, Let's Start",
+        guideSec1Title: "1. Spaced Repetition & Time Attack",
+        guideSec1Desc: "SM-2 algorithm calculates review times, while Time Attack mode introduces a countdown timer for adrenaline-boosted retention.",
+        guideSec2Title: "2. AI Generator Assistant & Audio-Only Mode",
+        guideSec2Desc: "Copy a ready-made prompt and use it with your preferred AI tool alongside your document, then paste its reply back into the app to auto-convert it into flashcards — or use hands-free audio mode while walking.",
+        guideSec3Title: "3. Daily Streaks & Trophies",
+        guideSec3Desc: "Maintain consecutive study day streaks and unlock professional badges to maximize productivity.",
+        guideSec4Title: "4. Moving Between Devices (No Cloud Account)",
+        guideSec4Desc: "All your data lives only on this device. To move it: tap 'Export Backup' and save the file somewhere like Google Drive or iCloud, then open the app on the other device and tap 'Import Backup'. Automatic account-based sync needs an external server, which is beyond what a single-file app like this can do.",
+        cancel: "Cancel",
+        weekDays: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+        sessionCycle: "Completed Focus Session:",
+        masteryRate: "Overall Mastery Rate:",
+        cardsBreakdown: "Interactive Flashcard Breakdown",
+        newCards: "New Cards",
+        learningCards: "Learning / Reviewing",
+        masteredCards: "Mastered Cards",
+        legendMinutes: "Focus Mins",
+        legendCards: "Reviewed Cards",
+        exportData: "💾 Export Backup",
+        importData: "📂 Import Backup",
+        difficultyIndex: "Subject Difficulty Index:",
+        speakCard: "🔊 Read Aloud",
+        themeLabel: "Cyber Theme:",
+        unlockedTag: "Unlocked 🏆",
+        streakLabel: "Study Streak:",
+        streakDays: "Days Streak 🔥",
+        audioModeActive: "🎧 Playing Audio Review Automatically...",
+        stopAudioMode: "Stop Audio Mode",
+        imageUrlLabel: "Image URL (optional):",
+        manageCards: "🗂️ Manage Cards",
+        editCard: "Edit",
+        deleteCard: "Delete",
+        saveChanges: "Save Changes",
+        searchCardsPlaceholder: "🔍 Search cards...",
+        noCardsFound: "No matching cards",
+        closeBtn: "Close",
+        dueTodayBadge: "Due today",
+        reviewDueOnlyBtn: "Due Only",
+        reviewAllCardsBtn: "All Cards",
+        exportDeckBtn: "Export This Deck",
+        retentionRate: "Retention Rate:",
+        lightModeBtn: "☀️ Light",
+        darkModeBtn: "🌙 Dark",
+        reminderBannerText: "You haven't reviewed your cards today yet! Keep your streak going 🔥",
+        reminderDismiss: "Dismiss",
+        trophies: [
+          { id: 'b1', title: 'Spark of Passion', desc: 'Successfully complete your first Pomodoro session', icon: '⚡' },
+          { id: 'b2', title: 'Repetition Master', desc: 'Review more than 20 flashcards', icon: '🎯' },
+          { id: 'b3', title: 'Focus Titan', desc: 'Accumulate over 60 minutes of study time', icon: '🔥' },
+          { id: 'b4', title: 'Total Mastery', desc: 'Completely master at least 5 flashcards', icon: '🏆' }
+        ]
+      },
+      fr: {
+        appName: "Compagnon d'étude intelligent",
+        soundOn: "Son activé",
+        soundOff: "Muet",
+        hapticsOn: "Vibrations activées",
+        hapticsOff: "Vibrations désactivées",
+        tabDecks: "🎴 Paquets (SRS)",
+        tabPomodoro: "⏱️ Pomodoro",
+        tabAnalytics: "📊 Analyses",
+        tabBadges: "🏆 Badges",
+        helpBtn: "❓ Guide d'utilisation",
+        decksTitle: "Paquets d'étude",
+        newDeckBtn: "Nouveau paquet",
+        addCardBtn: "Ajouter une carte",
+        aiGeneratorBtn: "🤖 Assistant IA",
+        importBtn: "📥 Importer",
+        cardsCount: "cartes",
+        startReview: "Commencer la révision",
+        timeAttackReview: "⚡ Mode Contre-la-montre",
+        audioModeReview: "🎧 Mode Audio Uniquement",
+        deleteDeck: "Supprimer le paquet",
+        confirmDeleteDeck: "Êtes-vous sûr de vouloir supprimer ce paquet et toutes ses cartes ?",
+        cancelReview: "Annuler la révision ✕",
+        cardFront: "Question (Recto)",
+        cardBack: "Réponse (Verso)",
+        flipHint: "Cliquez n'importe où pour retourner la carte 🔄 (ou glissez pour passer)",
+        again: "À refaire",
+        hard: "Difficile",
+        good: "Bien",
+        easy: "Facile",
+        focusMode: "Concentration",
+        shortBreakMode: "Pause courte",
+        longBreakMode: "Pause longue",
+        customTime: "⏱️ Temps personnalisé (Minutes) :",
+        startTimer: "Démarrer la session ▶️",
+        pauseTimer: "Mettre en pause ⏸️",
+        resetTimer: "Réinitialiser 🔄",
+        minutes: "min",
+        weeklyActivity: "📈 Activité d'étude hebdomadaire",
+        addCardTitle: "➕ Ajouter une nouvelle carte",
+        aiGenTitle: "🤖 Assistant Générateur IA",
+        aiGenHint: "L'application n'appelle jamais d'elle-même un modèle d'IA (cela exigerait d'exposer une clé API personnelle dans le fichier). À la place : copiez le prompt ci-dessous, utilisez-le avec l'outil IA de votre choix et le document à convertir, puis collez sa réponse ici.",
+        aiStep1Title: "Étape 1 : copiez ce prompt",
+        aiStep1Desc: "Collez-le dans l'outil IA que vous utilisez habituellement (ChatGPT, Claude, Gemini, etc.), avec le document que vous voulez transformer en cartes.",
+        copyPromptBtn: "📋 Copier le prompt",
+        promptCopiedMsg: "✅ Copié !",
+        aiStep2Title: "Étape 2 : collez la réponse de l'IA ici",
+        aiStep2Desc: "Une fois la réponse obtenue, copiez-la intégralement telle quelle et collez-la ci-dessous — elle sera automatiquement convertie en cartes prêtes à l'emploi.",
+        convertToCardsBtn: "🔄 Convertir la réponse en cartes",
+        aiPromptTemplate: `Je vais te donner le contenu d'un document d'étude (texte, chapitre de livre, notes de cours). Transforme-le en cartes mémoire (question et réponse) pour un système de répétition espacée.
+
+Instructions :
+1. Lis le contenu et n'extrais que les concepts et faits essentiels (ignore les détails secondaires).
+2. Une carte par concept important ; ne regroupe pas plusieurs concepts dans une seule carte, et ne divise pas un seul concept en plusieurs cartes.
+3. Chaque question doit être compréhensible seule, sans faire référence au « document » ou au « texte ci-dessus ».
+4. Rédige la réponse complète et directe, sans remplissage.
+5. Adapte le nombre de cartes à la taille du contenu (généralement 5 à 40 cartes).
+6. Garde les questions et réponses dans la même langue que le document original.
+
+Format de sortie (obligatoire, à respecter strictement) :
+Renvoie uniquement un tableau JSON valide, sans aucun texte avant ou après, et sans balises de code, exactement sous cette forme :
+[
+  {"front": "texte de la question", "back": "texte de la réponse"},
+  {"front": "...", "back": "..."}
+]
+
+Le document à convertir (je vais le coller ou le joindre ci-dessous) :`,
+        aiGenPlaceholder: "Collez ici la réponse complète de l'IA (doit être un tableau JSON, comme demandé dans le prompt)...",
+        selectDeck: "Sélectionner le paquet :",
+        frontLabel: "Question (Recto) :",
+        backLabel: "Réponse (Verso) :",
+        saveCard: "Enregistrer la carte",
+        addDeckTitle: "➕ Ajouter un nouveau paquet",
+        deckNameLabel: "Titre du paquet / matière :",
+        deckDescLabel: "Brève description :",
+        createDeck: "Créer le paquet",
+        importTitle: "📥 Importer des cartes",
+        importHint: "Collez au format CSV ou JSON :",
+        processImport: "Importer maintenant",
+        guideTitle: "📖 Guide d'utilisation du Compagnon d'Étude",
+        guideUnderstandBtn: "Compris, commençons",
+        guideSec1Title: "1. Répétition espacée & Contre-la-montre",
+        guideSec1Desc: "L'algorithme SM-2 calcule les intervalles de révision, tandis que le mode Contre-la-montre stimule la rétention.",
+        guideSec2Title: "2. Assistant Générateur IA & Mode Audio",
+        guideSec2Desc: "Copiez un prompt prêt à l'emploi et utilisez-le avec votre outil IA préféré et votre document, puis collez sa réponse dans l'application pour la convertir automatiquement en cartes — ou utilisez le mode audio mains libres en déplacement.",
+        guideSec3Title: "3. Séries quotidiennes & Trophées",
+        guideSec3Desc: "Maintenez vos séries de jours consécutifs et débloquez des badges professionnels.",
+        guideSec4Title: "4. Transfert entre appareils (sans compte cloud)",
+        guideSec4Desc: "Toutes vos données restent uniquement sur cet appareil. Pour les transférer : appuyez sur « Exporter la sauvegarde » et enregistrez le fichier sur Google Drive ou iCloud, puis ouvrez l'application sur l'autre appareil et appuyez sur « Importer la sauvegarde ». Une synchronisation automatique par compte nécessiterait un serveur externe, ce qui dépasse le cadre d'une application à fichier unique comme celle-ci.",
+        cancel: "Annuler",
+        weekDays: ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"],
+        sessionCycle: "Session de concentration complétée :",
+        masteryRate: "Taux de maîtrise global :",
+        cardsBreakdown: "Répartition interactive des cartes",
+        newCards: "Nouvelles cartes",
+        learningCards: "En cours d'apprentissage",
+        masteredCards: "Cartes maîtrisées",
+        legendMinutes: "Min de concentration",
+        legendCards: "Cartes révisées",
+        exportData: "💾 Exporter la sauvegarde",
+        importData: "📂 Importer la sauvegarde",
+        difficultyIndex: "Indice de difficulté :",
+        speakCard: "🔊 Lire à haute voix",
+        themeLabel: "Thème Néon :",
+        unlockedTag: "Débloqué 🏆",
+        streakLabel: "Série d'études :",
+        streakDays: "Jours de série 🔥",
+        audioModeActive: "🎧 Lecture audio automatique en cours...",
+        stopAudioMode: "Arrêter le mode audio",
+        imageUrlLabel: "URL de l'image (facultatif) :",
+        manageCards: "🗂️ Gérer les cartes",
+        editCard: "Modifier",
+        deleteCard: "Supprimer",
+        saveChanges: "Enregistrer",
+        searchCardsPlaceholder: "🔍 Rechercher des cartes...",
+        noCardsFound: "Aucune carte correspondante",
+        closeBtn: "Fermer",
+        dueTodayBadge: "À réviser aujourd'hui",
+        reviewDueOnlyBtn: "À réviser seulement",
+        reviewAllCardsBtn: "Toutes les cartes",
+        exportDeckBtn: "Exporter ce paquet",
+        retentionRate: "Taux de rétention :",
+        lightModeBtn: "☀️ Clair",
+        darkModeBtn: "🌙 Sombre",
+        reminderBannerText: "Vous n'avez pas encore révisé vos cartes aujourd'hui ! Maintenez votre série 🔥",
+        reminderDismiss: "Ignorer",
+        trophies: [
+          { id: 'b1', title: 'Étincelle de passion', desc: 'Terminez avec succès votre première session Pomodoro', icon: '⚡' },
+          { id: 'b2', title: 'Maître des répétitions', desc: 'Révisez plus de 20 cartes flash', icon: '🎯' },
+          { id: 'b3', title: 'Titan de la concentration', desc: 'Accumulez plus de 60 minutes d’étude', icon: '🔥' },
+          { id: 'b4', title: 'Maîtrise totale', desc: 'Maîtrisez complètement au moins 5 cartes', icon: '🏆' }
+        ]
+      }
+    };
+
+    class FeedbackEngine {
+      constructor() { this.ctx = null; this.muted = false; this.hapticsEnabled = true; }
+      init() {
+        if (!this.ctx) {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          this.ctx = new AudioContext();
+        }
+        if (this.ctx.state === 'suspended') this.ctx.resume();
+      }
+      vibrate(p) { if (this.hapticsEnabled && typeof window !== 'undefined' && 'vibrate' in navigator) try { navigator.vibrate(p); } catch (e) {} }
+      toggleMute() { this.muted = !this.muted; return this.muted; }
+      toggleHaptics() { this.hapticsEnabled = !this.hapticsEnabled; return this.hapticsEnabled; }
+      playClick(freq = 600, duration = 0.04) {
+        this.vibrate(10); if (this.muted) return; this.init();
+        const osc = this.ctx.createOscillator(), gain = this.ctx.createGain();
+        osc.type = 'sine'; osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(120, this.ctx.currentTime + duration);
+        gain.gain.setValueAtTime(0.12, this.ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + duration);
+        osc.connect(gain); gain.connect(this.ctx.destination);
+        osc.start(); osc.stop(this.ctx.currentTime + duration);
+      }
+      playFlip() {
+        this.vibrate(15); if (this.muted) return; this.init();
+        const osc = this.ctx.createOscillator(), gain = this.ctx.createGain();
+        osc.type = 'triangle'; osc.frequency.setValueAtTime(220, this.ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(480, this.ctx.currentTime + 0.08);
+        gain.gain.setValueAtTime(0.1, this.ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.08);
+        osc.connect(gain); gain.connect(this.ctx.destination);
+        osc.start(); osc.stop(this.ctx.currentTime + 0.08);
+      }
+      playRatingSound(quality) {
+        this.init(); const now = this.ctx.currentTime;
+        switch (quality) {
+          case 0:
+            this.vibrate([40, 30, 40]);
+            if (!this.muted) {
+              const osc = this.ctx.createOscillator(), gain = this.ctx.createGain();
+              osc.type = 'sawtooth'; osc.frequency.setValueAtTime(280, now);
+              osc.frequency.linearRampToValueAtTime(130, now + 0.18);
+              gain.gain.setValueAtTime(0.15, now); gain.gain.exponentialRampToValueAtTime(0.01, now + 0.18);
+              osc.connect(gain); gain.connect(this.ctx.destination);
+              osc.start(now); osc.stop(now + 0.18);
+            }
+            break;
+          case 3: this.vibrate(25); if (!this.muted) this.playTone(392, 0.12); break;
+          case 4: this.vibrate([15, 20, 15]); if (!this.muted) this.playArpeggio([523.25, 659.25], 0.12); break;
+          case 5: this.vibrate([10, 15, 10, 15, 10]); if (!this.muted) this.playArpeggio([523.25, 659.25, 783.99, 1046.50], 0.18); break;
+        }
+      }
+      playTone(freq, duration) {
+        if (this.muted) return;
+        const osc = this.ctx.createOscillator(), gain = this.ctx.createGain();
+        osc.type = 'sine'; osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+        gain.gain.setValueAtTime(0.15, this.ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + duration);
+        osc.connect(gain); gain.connect(this.ctx.destination);
+        osc.start(); osc.stop(this.ctx.currentTime + duration);
+      }
+      playArpeggio(freqs, duration) { freqs.forEach((f, i) => setTimeout(() => this.playTone(f, duration), i * 50)); }
+    }
+
+    const feedback = new FeedbackEngine();
+
+    const triggerConfetti = () => {
+      const colors = ['#8b5cf6', '#06b6d4', '#10b981', '#f59e0b', '#ec4899'];
+      for (let i = 0; i < 40; i++) {
+        const p = document.createElement('div');
+        p.className = 'confetti-particle';
+        p.style.left = Math.random() * 100 + 'vw';
+        p.style.top = '-10px';
+        p.style.width = Math.random() * 8 + 6 + 'px';
+        p.style.height = Math.random() * 8 + 6 + 'px';
+        p.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        p.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+        document.body.appendChild(p);
+        setTimeout(() => p.remove(), 2500);
+      }
+    };
+
+    // Defensive validators: never trust data coming from an imported file.
+    const isSafeImageUrl = (url) => typeof url === 'string' && /^(https?:\/\/|data:image\/)/i.test(url.trim());
+
+    // Shared by both the paste-in Import feature and the AI-assisted Generator:
+    // tolerantly extracts an array of {front, back} pairs from arbitrary pasted text.
+    // Handles: raw JSON, JSON wrapped in ```/```json code fences, JSON with stray
+    // prose before/after it (common when an AI ignores "output only JSON"), and a
+    // plain CSV fallback ("front,back" one pair per line, quoted fields supported).
+    const parseCardsFromText = (rawText) => {
+      const trimmed = (rawText || '').trim();
+      if (!trimmed) return [];
+
+      const candidates = [trimmed];
+      const fenceMatch = trimmed.match(/```(?:json)?\s*([\s\S]*?)```/i);
+      if (fenceMatch) candidates.unshift(fenceMatch[1].trim());
+      const arrayMatch = trimmed.match(/\[[\s\S]*\]/);
+      if (arrayMatch) candidates.push(arrayMatch[0]);
+
+      for (const candidate of candidates) {
+        try {
+          const parsed = JSON.parse(candidate);
+          if (Array.isArray(parsed)) {
+            const cards = parsed
+              .map(item => ({
+                front: String(item?.front ?? item?.question ?? item?.q ?? '').trim(),
+                back: String(item?.back ?? item?.answer ?? item?.a ?? '').trim(),
+                image: isSafeImageUrl(item?.image) ? item.image.trim() : ''
+              }))
+              .filter(c => c.front && c.back);
+            if (cards.length > 0) return cards;
+          }
+        } catch (e) { /* try next candidate */ }
+      }
+
+      // Fallback: CSV, one card per line as "front,back" (quoted fields supported).
+      const csvLineRegex = /^(?:"([^"]*(?:""[^"]*)*)"|([^,]*)),(?:"([^"]*(?:""[^"]*)*)"|(.*))$/;
+      return trimmed.split('\n')
+        .map(line => line.trim())
+        .filter(Boolean)
+        .map(line => {
+          const m = line.match(csvLineRegex);
+          if (!m) return null;
+          const front = (m[1] ?? m[2] ?? '').replace(/""/g, '"').trim();
+          const back = (m[3] ?? m[4] ?? '').replace(/""/g, '"').trim();
+          return front && back ? { front, back, image: '' } : null;
+        })
+        .filter(Boolean);
+    };
+
+    // Clipboard write with a fallback for contexts where the modern Clipboard API
+    // is unavailable (e.g. a file:// page opened directly on a phone, which is not
+    // a "secure context" and so navigator.clipboard may be undefined or blocked).
+    const copyTextToClipboard = async (text) => {
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+          return true;
+        }
+        throw new Error('Clipboard API unavailable');
+      } catch (e) {
+        try {
+          const textarea = document.createElement('textarea');
+          textarea.value = text;
+          textarea.style.position = 'fixed';
+          textarea.style.opacity = '0';
+          document.body.appendChild(textarea);
+          textarea.focus();
+          textarea.select();
+          const ok = document.execCommand('copy');
+          document.body.removeChild(textarea);
+          return ok;
+        } catch (e2) {
+          return false;
+        }
+      }
+    };
+
+    const sanitizeCard = (c) => {
+      if (!c || typeof c !== 'object') return null;
+      const front = typeof c.front === 'string' ? c.front : '';
+      const back = typeof c.back === 'string' ? c.back : '';
+      if (!front.trim() || !back.trim()) return null;
+      return {
+        id: typeof c.id === 'string' && c.id ? c.id : 'card-' + Date.now() + '-' + Math.random().toString(36).slice(2, 8),
+        front,
+        back,
+        image: isSafeImageUrl(c.image) ? c.image.trim() : '',
+        repetitions: Number.isFinite(c.repetitions) ? c.repetitions : 0,
+        interval: Number.isFinite(c.interval) && c.interval > 0 ? c.interval : 1,
+        easiness: Number.isFinite(c.easiness) ? Math.max(1.3, c.easiness) : 2.5,
+        dueDate: typeof c.dueDate === 'string' && !isNaN(Date.parse(c.dueDate)) ? c.dueDate : new Date().toISOString()
+      };
+    };
+
+    const sanitizeDeck = (d) => {
+      if (!d || typeof d !== 'object') return null;
+      const title = typeof d.title === 'string' && d.title.trim() ? d.title.trim() : 'Untitled Deck';
+      const cards = Array.isArray(d.cards) ? d.cards.map(sanitizeCard).filter(Boolean) : [];
+      return {
+        id: typeof d.id === 'string' && d.id ? d.id : 'deck-' + Date.now() + '-' + Math.random().toString(36).slice(2, 8),
+        title,
+        description: typeof d.description === 'string' ? d.description : '',
+        cards
+      };
+    };
+
+    const sanitizeDecksArray = (arr) => Array.isArray(arr) ? arr.map(sanitizeDeck).filter(Boolean) : null;
+
+    const isCardDue = (card) => {
+      if (!card.dueDate) return true;
+      const due = new Date(card.dueDate);
+      if (isNaN(due.getTime())) return true;
+      return due.getTime() <= Date.now();
+    };
+
+    const calculateSM2 = (quality, repetitions, interval, easiness) => {
+      let nextRepetitions = repetitions, nextInterval = interval, nextEasiness = easiness;
+      if (quality >= 3) {
+        if (repetitions === 0) nextInterval = 1;
+        else if (repetitions === 1) nextInterval = 6;
+        else nextInterval = Math.round(interval * easiness);
+        nextRepetitions += 1;
+      } else {
+        nextRepetitions = 0; nextInterval = 1;
+      }
+      nextEasiness = easiness + (0.1 - (5 - quality) * (0.08 + (5 - quality) * 0.02));
+      if (nextEasiness < 1.3) nextEasiness = 1.3;
+      const nextDueDate = new Date(); nextDueDate.setDate(nextDueDate.getDate() + nextInterval);
+      return { repetitions: nextRepetitions, interval: nextInterval, easiness: nextEasiness, dueDate: nextDueDate.toISOString() };
+    };
+
+    // Small self-contained inline editor used by the Manage Cards modal.
+    function EditCardForm({ card, t, onSave, onCancel }) {
+      const [front, setFront] = useState(card.front);
+      const [back, setBack] = useState(card.back);
+      const [image, setImage] = useState(card.image || '');
+
+      return (
+        <div className="space-y-2">
+          <textarea value={front} onChange={(e) => setFront(e.target.value)} rows="2" className="w-full bg-white/5 border border-white/10 rounded-xl p-2.5 text-sm text-white focus:outline-none focus:border-white/40" />
+          <textarea value={back} onChange={(e) => setBack(e.target.value)} rows="2" className="w-full bg-white/5 border border-white/10 rounded-xl p-2.5 text-sm text-white focus:outline-none focus:border-white/40" />
+          <input type="url" value={image} onChange={(e) => setImage(e.target.value)} placeholder={t.imageUrlLabel} className="w-full bg-white/5 border border-white/10 rounded-xl p-2.5 text-xs text-white focus:outline-none focus:border-white/40" />
+          <div className="flex gap-2 pt-1">
+            <button onClick={() => onSave(front, back, image)} className="flex-1 py-2 theme-btn text-white font-bold text-xs rounded-xl">{t.saveChanges}</button>
+            <button onClick={onCancel} className="px-4 py-2 bg-white/5 border border-white/10 text-gray-400 font-bold text-xs rounded-xl">{t.cancel}</button>
+          </div>
+        </div>
+      );
+    }
+
+    function App() {
+      const [lang, setLang] = useState('ar');
+      const t = translations[lang];
+
+      const [activeTab, setActiveTab] = useState('decks');
+      const [isMuted, setIsMuted] = useState(false);
+      const [isHapticsOn, setIsHapticsOn] = useState(true);
+      const [theme, setTheme] = useState('purple');
+      const [colorMode, setColorMode] = useState(() => localStorage.getItem('ssc_colormode') || 'dark');
+
+      const [isAddCardOpen, setIsAddCardOpen] = useState(false);
+      const [isAddDeckOpen, setIsAddDeckOpen] = useState(false);
+      const [isImportOpen, setIsImportOpen] = useState(false);
+      const [isAiGenOpen, setIsAiGenOpen] = useState(false);
+      const [isGuideOpen, setIsGuideOpen] = useState(false);
+      const [manageDeckId, setManageDeckId] = useState(null);
+      const [editingCardId, setEditingCardId] = useState(null);
+      const [cardSearchQuery, setCardSearchQuery] = useState('');
+      const [reviewDueOnly, setReviewDueOnly] = useState(true);
+
+      const [selectedDeckForNewCard, setSelectedDeckForNewCard] = useState('');
+      const [importText, setImportText] = useState('');
+      const [aiSourceText, setAiSourceText] = useState('');
+
+      const [newFront, setNewFront] = useState('');
+      const [newBack, setNewBack] = useState('');
+      const [newCardImage, setNewCardImage] = useState('');
+      const [newDeckTitle, setNewDeckTitle] = useState('');
+      const [newDeckDesc, setNewDeckDesc] = useState('');
+
+      const [decks, setDecks] = useState(() => {
+        try {
+          const saved = localStorage.getItem('ssc_decks');
+          if (saved) {
+            const parsedSaved = JSON.parse(saved);
+            const cleaned = sanitizeDecksArray(parsedSaved);
+            if (cleaned) return cleaned;
+          }
+          return [
+            {
+              id: 'deck-1',
+              title: 'Anatomy - Nervous System',
+              description: 'Brain structure, cranial nerves, and synaptic transmission',
+              cards: [
+                { id: 'c1', front: 'What is the principal inhibitory neurotransmitter in the CNS?', back: 'GABA (Gamma-Aminobutyric Acid)', repetitions: 0, interval: 1, easiness: 2.5, dueDate: new Date().toISOString() },
+                { id: 'c2', front: 'Which cranial nerve handles facial sensation?', back: 'Trigeminal Nerve (CN V)', repetitions: 2, interval: 6, easiness: 2.6, dueDate: new Date().toISOString() }
+              ]
+            }
+          ];
+        } catch(e) { return []; }
+      });
+
+      const [reviewDeckId, setReviewDeckId] = useState(null);
+      const [reviewCardIds, setReviewCardIds] = useState([]);
+      const [currentCardIdx, setCurrentCardIdx] = useState(0);
+      const [isFlipped, setIsFlipped] = useState(false);
+      
+      // New feature states
+      const [isTimeAttack, setIsTimeAttack] = useState(false);
+      const [timeAttackSeconds, setTimeAttackSeconds] = useState(12);
+      const [isAudioMode, setIsAudioMode] = useState(false);
+
+      // Swipe gesture touch handling refs
+      const touchStartX = useRef(0);
+      const touchEndX = useRef(0);
+
+      const [studyStats, setStudyStats] = useState(() => {
+        const defaultStats = { 
+          weeklyMinutesData: [0, 0, 0, 0, 0, 0, 0],
+          weeklyCardsData: [0, 0, 0, 0, 0, 0, 0],
+          streakDays: 3,
+          lastActiveDate: new Date().toDateString(),
+          totalReviews: 0,
+          successfulReviews: 0
+        };
+        try {
+          const saved = localStorage.getItem('ssc_stats');
+          if (!saved) return defaultStats;
+          const parsed = JSON.parse(saved);
+          return {
+            weeklyMinutesData: Array.isArray(parsed.weeklyMinutesData) && parsed.weeklyMinutesData.length === 7 ? parsed.weeklyMinutesData : [0, 0, 0, 0, 0, 0, 0],
+            weeklyCardsData: Array.isArray(parsed.weeklyCardsData) && parsed.weeklyCardsData.length === 7 ? parsed.weeklyCardsData : [0, 0, 0, 0, 0, 0, 0],
+            streakDays: parsed.streakDays || 1,
+            lastActiveDate: parsed.lastActiveDate || new Date().toDateString(),
+            totalReviews: Number.isFinite(parsed.totalReviews) ? parsed.totalReviews : 0,
+            successfulReviews: Number.isFinite(parsed.successfulReviews) ? parsed.successfulReviews : 0
+          };
+        } catch (e) {
+          return defaultStats;
+        }
+      });
+
+      const [showReminderBanner, setShowReminderBanner] = useState(false);
+
+      const [timerMode, setTimerMode] = useState('focus');
+      const [customMinutes, setCustomMinutes] = useState(25);
+      const [timeLeft, setTimeLeft] = useState(25 * 60);
+      const [isTimerRunning, setIsTimerRunning] = useState(false);
+      const [completedFocusSessions, setCompletedFocusSessions] = useState(0);
+
+      useEffect(() => { localStorage.setItem('ssc_decks', JSON.stringify(decks)); }, [decks]);
+      useEffect(() => { localStorage.setItem('ssc_stats', JSON.stringify(studyStats)); }, [studyStats]);
+      useEffect(() => { localStorage.setItem('ssc_colormode', colorMode); }, [colorMode]);
+
+      // FIX: the streak counter used to be a static number that was saved but never
+      // recalculated. On mount, compare the last active day to today: same day -> no
+      // change, exactly one day ago -> +1, anything else (gap or corrupted date) -> reset to 1.
+      useEffect(() => {
+        setStudyStats(prev => {
+          const today = new Date();
+          const todayStr = today.toDateString();
+          if (prev.lastActiveDate === todayStr) return prev;
+
+          const lastActive = new Date(prev.lastActiveDate);
+          let nextStreak = 1;
+          if (!isNaN(lastActive.getTime())) {
+            const msPerDay = 24 * 60 * 60 * 1000;
+            const dayDiff = Math.round((new Date(todayStr) - new Date(lastActive.toDateString())) / msPerDay);
+            if (dayDiff === 1) nextStreak = (prev.streakDays || 0) + 1;
+            else if (dayDiff === 0) nextStreak = prev.streakDays || 1;
+          }
+          setShowReminderBanner(true);
+          return { ...prev, streakDays: nextStreak, lastActiveDate: todayStr };
+        });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+      }, []);
+
+      useEffect(() => {
+        const html = document.getElementById('html-root');
+        if (html) {
+          html.setAttribute('lang', lang);
+          html.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+        }
+      }, [lang]);
+
+      useEffect(() => {
+        document.body.className = `theme-${theme} ${colorMode === 'light' ? 'light-mode' : ''}`;
+      }, [theme, colorMode]);
+
+      // Time attack countdown effect
+      useEffect(() => {
+        let timer = null;
+        if (reviewDeckId && isTimeAttack && !isFlipped) {
+          if (timeAttackSeconds > 0) {
+            timer = setTimeout(() => setTimeAttackSeconds(prev => prev - 1), 1000);
+          } else {
+            handleRateCard(0);
+          }
+        }
+        return () => clearTimeout(timer);
+      }, [reviewDeckId, isTimeAttack, timeAttackSeconds, isFlipped]);
+
+      // Audio-only mode automated loop supporting multilinguality or gracefully handling audio if browser lacks multi-language TTS
+      useEffect(() => {
+        let audioTimer = null;
+        if (reviewDeckId && isAudioMode) {
+          const currentDeck = decks.find(d => d.id === reviewDeckId);
+          const card = currentDeck?.cards.find(c => c.id === reviewCardIds[currentCardIdx]);
+          if (card) {
+            speakText(`${t.cardFront}: ${card.front}`);
+            audioTimer = setTimeout(() => {
+              speakText(`${t.cardBack}: ${card.back}`);
+              setTimeout(() => {
+                if (currentCardIdx + 1 < reviewCardIds.length) {
+                  setCurrentCardIdx(prev => prev + 1);
+                  setIsFlipped(false);
+                } else {
+                  setIsAudioMode(false);
+                  setReviewDeckId(null);
+                }
+              }, 4000);
+            }, 5000);
+          }
+        }
+        return () => clearTimeout(audioTimer);
+      }, [reviewDeckId, isAudioMode, currentCardIdx, lang, reviewCardIds]);
+
+      useEffect(() => {
+        let interval = null;
+        if (isTimerRunning && timeLeft > 0) {
+          interval = setInterval(() => setTimeLeft((prev) => prev - 1), 1000);
+        } else if (timeLeft === 0 && isTimerRunning) {
+          feedback.playTone(880, 0.6);
+          triggerConfetti();
+          const today = new Date().getDay();
+
+          if (timerMode === 'focus') {
+            const nextCount = completedFocusSessions + 1;
+            setCompletedFocusSessions(nextCount);
+
+            setStudyStats(prev => {
+              const updatedMins = [...(prev.weeklyMinutesData || [0,0,0,0,0,0,0])];
+              updatedMins[today] += customMinutes;
+              return { ...prev, weeklyMinutesData: updatedMins };
+            });
+
+            if (nextCount % 4 === 0) {
+              setTimerMode('long');
+              setCustomMinutes(15);
+              setTimeLeft(15 * 60);
+            } else {
+              setTimerMode('short');
+              setCustomMinutes(5);
+              setTimeLeft(5 * 60);
+            }
+          } else {
+            setTimerMode('focus');
+            setCustomMinutes(25);
+            setTimeLeft(25 * 60);
+          }
+        }
+        return () => clearInterval(interval);
+      }, [isTimerRunning, timeLeft, timerMode, customMinutes, completedFocusSessions]);
+
+      const toggleLanguage = () => {
+        feedback.playClick(800);
+        setLang(prev => prev === 'ar' ? 'en' : (prev === 'en' ? 'fr' : 'ar'));
+      };
+
+      const handleMinutesChange = (newMins) => {
+        const mins = Math.max(1, Math.min(180, parseInt(newMins) || 1));
+        setCustomMinutes(mins);
+        setTimeLeft(mins * 60);
+        setIsTimerRunning(false);
+      };
+
+      const speakText = (text) => {
+        if ('speechSynthesis' in window) {
+          window.speechSynthesis.cancel();
+          const utterance = new SpeechSynthesisUtterance(text);
+          if (lang === 'ar') utterance.lang = 'ar-SA';
+          else if (lang === 'fr') utterance.lang = 'fr-FR';
+          else utterance.lang = 'en-US';
+          window.speechSynthesis.speak(utterance);
+        }
+      };
+
+      const exportBackupJSON = () => {
+        const backup = { decks, studyStats, completedFocusSessions };
+        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(backup, null, 2));
+        const downloadAnchor = document.createElement('a');
+        downloadAnchor.setAttribute("href", dataStr);
+        downloadAnchor.setAttribute("download", `study_companion_pro_backup_${Date.now()}.json`);
+        document.body.appendChild(downloadAnchor);
+        downloadAnchor.click();
+        downloadAnchor.remove();
+      };
+
+      const importBackupJSON = (e) => {
+        const file = e.target.files[0];
+        const inputEl = e.target;
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          try {
+            const parsed = JSON.parse(event.target.result);
+            const cleanedDecks = sanitizeDecksArray(parsed.decks);
+            if (!cleanedDecks) throw new Error('invalid decks shape');
+
+            let cleanedStats = null;
+            if (parsed.studyStats && typeof parsed.studyStats === 'object') {
+              const s = parsed.studyStats;
+              cleanedStats = {
+                weeklyMinutesData: Array.isArray(s.weeklyMinutesData) && s.weeklyMinutesData.length === 7 && s.weeklyMinutesData.every(Number.isFinite) ? s.weeklyMinutesData : [0,0,0,0,0,0,0],
+                weeklyCardsData: Array.isArray(s.weeklyCardsData) && s.weeklyCardsData.length === 7 && s.weeklyCardsData.every(Number.isFinite) ? s.weeklyCardsData : [0,0,0,0,0,0,0],
+                streakDays: Number.isFinite(s.streakDays) && s.streakDays > 0 ? s.streakDays : 1,
+                lastActiveDate: typeof s.lastActiveDate === 'string' && !isNaN(new Date(s.lastActiveDate).getTime()) ? s.lastActiveDate : new Date().toDateString()
+              };
+            }
+
+            const cleanedSessions = Number.isFinite(parsed.completedFocusSessions) && parsed.completedFocusSessions >= 0 ? parsed.completedFocusSessions : null;
+
+            setDecks(cleanedDecks);
+            if (cleanedStats) setStudyStats(cleanedStats);
+            if (cleanedSessions !== null) setCompletedFocusSessions(cleanedSessions);
+
+            alert(lang === 'ar' ? 'تم استرجاع النسخة الاحتياطية بنجاح!' : (lang === 'fr' ? 'Sauvegarde restaurée avec succès !' : 'Backup restored successfully!'));
+          } catch (err) {
+            alert(lang === 'ar' ? 'ملف غير صالح أو تالف!' : (lang === 'fr' ? 'Fichier invalide ou corrompu !' : 'Invalid or corrupted backup file!'));
+          } finally {
+            inputEl.value = '';
+          }
+        };
+        reader.onerror = () => {
+          alert(lang === 'ar' ? 'تعذرت قراءة الملف!' : (lang === 'fr' ? 'Impossible de lire le fichier !' : 'Could not read the file!'));
+          inputEl.value = '';
+        };
+        reader.readAsText(file);
+      };
+
+      // FIX: paste-in CSV/JSON import — the UI strings existed but no handler or
+      // modal was ever wired up, so this feature was completely unreachable.
+      const handleProcessImport = (e) => {
+        e.preventDefault();
+        if (!importText.trim() || !selectedDeckForNewCard) return;
+        feedback.playClick(900);
+
+        const importedCards = parseCardsFromText(importText);
+
+        if (importedCards.length === 0) {
+          alert(lang === 'ar' ? 'تعذر العثور على بطاقات صالحة في النص (استخدم صيغة JSON أو CSV بعمودين front,back)' : (lang === 'fr' ? 'Aucune carte valide trouvée (utilisez le format JSON ou CSV front,back)' : 'No valid cards found (use JSON or two-column CSV: front,back)'));
+          return;
+        }
+
+        const newCards = importedCards.map((c, i) => ({
+          id: 'card-import-' + Date.now() + '-' + i,
+          front: c.front,
+          back: c.back,
+          image: c.image || '',
+          repetitions: 0, interval: 1, easiness: 2.5, dueDate: new Date().toISOString()
+        }));
+
+        setDecks(decks.map(d => d.id === selectedDeckForNewCard ? { ...d, cards: [...d.cards, ...newCards] } : d));
+        setImportText('');
+        setIsImportOpen(false);
+        alert(lang === 'ar' ? `تم إستيراد ${newCards.length} بطاقة بنجاح!` : (lang === 'fr' ? `${newCards.length} cartes importées avec succès !` : `Successfully imported ${newCards.length} cards!`));
+      };
+
+      const handleDeleteDeck = (deckId, deckTitle) => {
+        feedback.playClick(400);
+        if (confirm(`${t.confirmDeleteDeck}\n\n[ ${deckTitle} ]`)) {
+          setDecks(decks.filter(d => d.id !== deckId));
+        }
+      };
+
+      const confirmDiscard = (hasUnsavedText) => {
+        if (!hasUnsavedText) return true;
+        return confirm(lang === 'ar' ? 'لديك نص لم يُحفظ، هل تريد تجاهله؟' : (lang === 'fr' ? 'Vous avez du texte non enregistré. Voulez-vous l\'ignorer ?' : 'You have unsaved text. Discard it?'));
+      };
+
+      const handleAddCard = (e) => {
+        e.preventDefault();
+        if (!newFront.trim() || !newBack.trim() || !selectedDeckForNewCard) return;
+        feedback.playClick(900);
+        const newCard = { id: 'card-' + Date.now(), front: newFront, back: newBack, image: isSafeImageUrl(newCardImage) ? newCardImage.trim() : '', repetitions: 0, interval: 1, easiness: 2.5, dueDate: new Date().toISOString() };
+        setDecks(decks.map(d => d.id === selectedDeckForNewCard ? { ...d, cards: [...d.cards, newCard] } : d));
+        setNewFront(''); setNewBack(''); setNewCardImage(''); setIsAddCardOpen(false);
+      };
+
+      const handleUpdateCard = (deckId, cardId, updatedFront, updatedBack, updatedImage) => {
+        if (!updatedFront.trim() || !updatedBack.trim()) return;
+        setDecks(decks.map(d => d.id === deckId
+          ? { ...d, cards: d.cards.map(c => c.id === cardId ? { ...c, front: updatedFront, back: updatedBack, image: isSafeImageUrl(updatedImage) ? updatedImage.trim() : '' } : c) }
+          : d));
+        setEditingCardId(null);
+      };
+
+      const handleDeleteCard = (deckId, cardId, cardFront) => {
+        const confirmMsg = lang === 'ar' ? `حذف هذه البطاقة؟\n\n"${cardFront}"` : (lang === 'fr' ? `Supprimer cette carte ?\n\n"${cardFront}"` : `Delete this card?\n\n"${cardFront}"`);
+        if (!confirm(confirmMsg)) return;
+        feedback.playClick(400);
+        setDecks(decks.map(d => d.id === deckId ? { ...d, cards: d.cards.filter(c => c.id !== cardId) } : d));
+      };
+
+      const exportDeckJSON = (deck) => {
+        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(deck, null, 2));
+        const downloadAnchor = document.createElement('a');
+        downloadAnchor.setAttribute("href", dataStr);
+        downloadAnchor.setAttribute("download", `${deck.title.replace(/[^a-z0-9\u0600-\u06FF_-]+/gi, '_')}_${Date.now()}.json`);
+        document.body.appendChild(downloadAnchor);
+        downloadAnchor.click();
+        downloadAnchor.remove();
+      };
+
+      const handleAddDeck = (e) => {
+        e.preventDefault();
+        if (!newDeckTitle.trim()) return;
+        feedback.playClick(900);
+        const newDeck = { id: 'deck-' + Date.now(), title: newDeckTitle, description: newDeckDesc || 'Study Deck', cards: [] };
+        setDecks([...decks, newDeck]);
+        setNewDeckTitle(''); setNewDeckDesc(''); setIsAddDeckOpen(false);
+      };
+
+      // The app has no built-in AI model and never calls any external AI API on its
+      // own (that would require the user to embed a personal API key directly in
+      // client-side code, which is visible to anyone who opens the file — unsafe).
+      // Instead: give the user a ready-made prompt to copy into whatever AI tool
+      // they already use, then parse whatever that AI replies with.
+      const [promptCopied, setPromptCopied] = useState(false);
+      const handleCopyAiPrompt = async () => {
+        feedback.playClick(900);
+        const ok = await copyTextToClipboard(t.aiPromptTemplate);
+        if (ok) {
+          setPromptCopied(true);
+          setTimeout(() => setPromptCopied(false), 2500);
+        } else {
+          alert(lang === 'ar' ? 'تعذر النسخ تلقائياً. حدد النص يدوياً وانسخه (Ctrl/⌘+C).' : (lang === 'fr' ? 'Copie automatique impossible. Sélectionnez le texte et copiez-le manuellement (Ctrl/⌘+C).' : 'Automatic copy failed. Please select the text and copy it manually (Ctrl/⌘+C).'));
+        }
+      };
+
+      const handleAiGenerateCards = (e) => {
+        e.preventDefault();
+        if (!aiSourceText.trim() || !selectedDeckForNewCard) return;
+        feedback.playClick(900);
+
+        const parsedCards = parseCardsFromText(aiSourceText);
+
+        if (parsedCards.length === 0) {
+          alert(lang === 'ar' ? 'تعذر العثور على بطاقات في الرد الذي لصقته. تأكد أنك لصقت رد الذكاء الاصطناعي بالكامل كما هو.' : (lang === 'fr' ? "Aucune carte trouvée dans le texte collé. Assurez-vous d'avoir collé la réponse complète de l'IA telle quelle." : "No cards found in the pasted text. Make sure you pasted the AI's full reply as-is."));
+          return;
+        }
+
+        const generatedCards = parsedCards.map((c, i) => ({
+          id: 'card-ai-' + Date.now() + '-' + i,
+          front: c.front,
+          back: c.back,
+          image: c.image || '',
+          repetitions: 0, interval: 1, easiness: 2.5, dueDate: new Date().toISOString()
+        }));
+
+        setDecks(decks.map(d => d.id === selectedDeckForNewCard ? { ...d, cards: [...d.cards, ...generatedCards] } : d));
+        setAiSourceText('');
+        setIsAiGenOpen(false);
+        alert(lang === 'ar' ? `تمت إضافة ${generatedCards.length} بطاقة بنجاح!` : (lang === 'fr' ? `${generatedCards.length} cartes ajoutées avec succès !` : `Successfully added ${generatedCards.length} cards!`));
+      };
+
+      const startReview = (deckId, timeAttack = false, audioMode = false, dueOnly = true) => {
+        const deck = decks.find(d => d.id === deckId);
+        if (!deck || deck.cards.length === 0) return alert(lang === 'ar' ? 'هذه المجموعة فارغة!' : (lang === 'fr' ? 'Ce paquet est vide !' : 'This deck is empty!'));
+
+        let cardsToReview = dueOnly ? deck.cards.filter(isCardDue) : deck.cards;
+        if (dueOnly && cardsToReview.length === 0) {
+          const reviewAllAnyway = confirm(
+            lang === 'ar' ? 'لا توجد بطاقات مستحقة اليوم في هذه المجموعة. هل تريد مراجعة كل البطاقات على أي حال؟' :
+            (lang === 'fr' ? "Aucune carte n'est due aujourd'hui dans ce paquet. Voulez-vous réviser toutes les cartes quand même ?" :
+            'No cards are due today in this deck. Review all cards anyway?')
+          );
+          if (!reviewAllAnyway) return;
+          cardsToReview = deck.cards;
+        }
+
+        feedback.playClick(650);
+        setReviewDeckId(deckId);
+        setReviewCardIds(cardsToReview.map(c => c.id));
+        setReviewDueOnly(dueOnly);
+        setCurrentCardIdx(0); 
+        setIsFlipped(false);
+        setIsTimeAttack(timeAttack);
+        setTimeAttackSeconds(12);
+        setIsAudioMode(audioMode);
+      };
+
+      const handleRateCard = (quality) => {
+        const currentDeck = decks.find(d => d.id === reviewDeckId);
+        const currentCardId = reviewCardIds[currentCardIdx];
+        const currentCard = currentDeck?.cards?.find(c => c.id === currentCardId);
+        if (!currentDeck || !currentCard) { setReviewDeckId(null); setIsAudioMode(false); return; }
+        feedback.playRatingSound(quality);
+        const updatedCardData = calculateSM2(quality, currentCard.repetitions, currentCard.interval, currentCard.easiness);
+
+        setDecks(decks.map(d => {
+          if (d.id === reviewDeckId) {
+            const updatedCards = d.cards.map(c => c.id === currentCardId ? { ...c, ...updatedCardData } : c);
+            return { ...d, cards: updatedCards };
+          }
+          return d;
+        }));
+
+        const today = new Date().getDay();
+        setStudyStats(prev => {
+          const updatedWeeklyCards = [...(prev.weeklyCardsData || [0,0,0,0,0,0,0])];
+          updatedWeeklyCards[today] += 1;
+          return {
+            ...prev,
+            weeklyCardsData: updatedWeeklyCards,
+            totalReviews: (prev.totalReviews || 0) + 1,
+            successfulReviews: (prev.successfulReviews || 0) + (quality >= 3 ? 1 : 0)
+          };
+        });
+        setShowReminderBanner(false);
+
+        if (currentCardIdx + 1 < reviewCardIds.length) {
+          setCurrentCardIdx(prev => prev + 1); 
+          setIsFlipped(false);
+          setTimeAttackSeconds(12);
+        } else {
+          triggerConfetti();
+          setReviewDeckId(null);
+          setIsAudioMode(false);
+        }
+      };
+
+      // Swipe gesture handlers for skipping/moving to next card
+      const handleTouchStart = (e) => {
+        touchStartX.current = e.targetTouches[0].clientX;
+      };
+
+      const handleTouchMove = (e) => {
+        touchEndX.current = e.targetTouches[0].clientX;
+      };
+
+      const handleTouchEnd = () => {
+        if (!reviewDeckId) return;
+
+        const distance = touchStartX.current - touchEndX.current;
+        const threshold = 50; // min swipe distance in px
+
+        if (Math.abs(distance) > threshold) {
+          feedback.playClick(700);
+          if (currentCardIdx + 1 < reviewCardIds.length) {
+            setCurrentCardIdx(prev => prev + 1);
+            setIsFlipped(false);
+            setTimeAttackSeconds(12);
+          } else {
+            triggerConfetti();
+            setReviewDeckId(null);
+            setIsAudioMode(false);
+          }
+        }
+      };
+
+      const getDeckDifficulty = (deck) => {
+        if (!deck.cards || deck.cards.length === 0) return 0;
+        const avgEasiness = deck.cards.reduce((acc, c) => acc + (c.easiness || 2.5), 0) / deck.cards.length;
+        const diffPercent = Math.round(((3.0 - avgEasiness) / 1.7) * 100);
+        return Math.max(5, Math.min(100, diffPercent));
+      };
+
+      const formatTime = (s) => `${Math.floor(s / 60).toString().padStart(2, '0')}:${(s % 60).toString().padStart(2, '0')}`;
+      
+      const allCards = decks.flatMap(d => d.cards);
+      const totalCardsCount = allCards.length;
+      const newCardsCount = allCards.filter(c => c.repetitions === 0).length;
+      const learningCardsCount = allCards.filter(c => c.repetitions > 0 && c.repetitions < 3).length;
+      const masteredCardsCount = allCards.filter(c => c.repetitions >= 3).length;
+      const masteryPercentage = totalCardsCount > 0 ? Math.round((masteredCardsCount / totalCardsCount) * 100) : 0;
+      const retentionPercentage = (studyStats.totalReviews || 0) > 0 ? Math.round(((studyStats.successfulReviews || 0) / studyStats.totalReviews) * 100) : null;
+
+      const totalMinsStudied = (studyStats.weeklyMinutesData || []).reduce((a, b) => a + b, 0);
+
+      const trophiesList = t.trophies.map(tr => {
+        let unlocked = false;
+        if (tr.id === 'b1') unlocked = completedFocusSessions >= 1;
+        if (tr.id === 'b2') unlocked = allCards.reduce((a,c) => a + c.repetitions, 0) >= 20;
+        if (tr.id === 'b3') unlocked = totalMinsStudied >= 60;
+        if (tr.id === 'b4') unlocked = masteredCardsCount >= 5;
+        return { ...tr, unlocked };
+      });
+
+      const safeWeeklyMins = studyStats.weeklyMinutesData || [0,0,0,0,0,0,0];
+      const safeWeeklyCards = studyStats.weeklyCardsData || [0,0,0,0,0,0,0];
+      const maxWeeklyMinsVal = Math.max(...safeWeeklyMins, 30);
+      const maxWeeklyCardsVal = Math.max(...safeWeeklyCards, 10);
+
+      return (
+        <div className="min-h-screen p-4 md:p-8 flex flex-col items-center relative selection:bg-purple-500 selection:text-white">
+          <div className="fixed top-[-100px] left-1/4 w-[500px] h-[500px] bg-purple-600/15 rounded-full blur-[120px] pointer-events-none"></div>
+
+          {/* IN-APP REMINDER BANNER (shown on load if not studied yet today; substitutes for OS push notifications) */}
+          {showReminderBanner && (
+            <div className="w-full max-w-5xl mb-4 z-10 bg-amber-500/15 border border-amber-500/30 text-amber-200 rounded-2xl px-4 py-3 flex items-center justify-between gap-3 flex-wrap">
+              <span className="text-sm font-semibold">🔥 {t.reminderBannerText}</span>
+              <button onClick={() => setShowReminderBanner(false)} className="px-3 py-1.5 bg-white/10 hover:bg-white/20 rounded-lg text-xs font-bold shrink-0">{t.reminderDismiss} ✕</button>
+            </div>
+          )}
+
+          {/* HEADER BAR */}
+          <header className="w-full max-w-5xl flex justify-between items-center glass-panel rounded-2xl p-4 mb-6 shadow-2xl z-10 flex-wrap gap-3">
+            <div className="flex items-center gap-3">
+              <div className="w-11 h-11 rounded-xl theme-btn flex items-center justify-center font-bold text-2xl shadow-lg border border-white/20">⚡</div>
+              <div>
+                <h1 className="font-extrabold text-xl text-white tracking-wide">{t.appName}</h1>
+                <div className="flex items-center gap-1.5 mt-0.5">
+                  <span className="text-[10px] bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded-full border border-amber-500/30 font-bold">
+                    🔥 {studyStats.streakDays || 1} {t.streakDays}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2 flex-wrap">
+              <div className="flex gap-1.5 items-center bg-white/5 p-1.5 rounded-xl border border-white/10">
+                <span className="text-[10px] text-gray-400 px-1 font-semibold">{t.themeLabel}</span>
+                <button onClick={() => setTheme('purple')} className={`w-4 h-4 rounded-full bg-purple-500 border ${theme === 'purple' ? 'ring-2 ring-white scale-110' : ''}`} title="Purple"></button>
+                <button onClick={() => setTheme('cyan')} className={`w-4 h-4 rounded-full bg-cyan-500 border ${theme === 'cyan' ? 'ring-2 ring-white scale-110' : ''}`} title="Cyan"></button>
+                <button onClick={() => setTheme('emerald')} className={`w-4 h-4 rounded-full bg-emerald-500 border ${theme === 'emerald' ? 'ring-2 ring-white scale-110' : ''}`} title="Emerald"></button>
+              </div>
+              <button onClick={() => { feedback.playClick(); setColorMode(prev => prev === 'dark' ? 'light' : 'dark'); }} className="px-3 py-2 rounded-xl border text-xs font-semibold transition bg-white/5 border-white/10 text-gray-300">
+                {colorMode === 'dark' ? t.lightModeBtn : t.darkModeBtn}
+              </button>
+              <button onClick={() => { feedback.playClick(); setIsGuideOpen(true); }} className="px-3.5 py-2 rounded-xl bg-amber-500/20 border border-amber-500/40 text-amber-200 font-bold text-xs hover:bg-amber-500/30 transition shadow-lg">
+                {t.helpBtn}
+              </button>
+              <button onClick={toggleLanguage} className="px-3.5 py-2 rounded-xl theme-bg-alpha theme-border theme-text font-bold text-xs hover:opacity-80 transition flex items-center gap-1 shadow-lg">
+                <span>🌐</span><span>{lang === 'ar' ? 'English' : (lang === 'en' ? 'Français' : 'العربية')}</span>
+              </button>
+              <button onClick={() => { const m = feedback.toggleMute(); setIsMuted(m); }} className={`px-3 py-2 rounded-xl border text-xs font-semibold transition ${!isMuted ? 'theme-bg-alpha theme-border theme-text' : 'bg-white/5 border-white/10 text-gray-500'}`}>
+                {!isMuted ? '🔔 ' + t.soundOn : '🔇 ' + t.soundOff}
+              </button>
+              <button onClick={() => { const h = feedback.toggleHaptics(); setIsHapticsOn(h); }} className={`px-3 py-2 rounded-xl border text-xs font-semibold transition ${isHapticsOn ? 'bg-indigo-500/20 border-indigo-500/40 text-indigo-200' : 'bg-white/5 border-white/10 text-gray-500'}`}>
+                {isHapticsOn ? '📳 ' + t.hapticsOn : '📴 ' + t.hapticsOff}
+              </button>
+            </div>
+          </header>
+
+          {/* NAV TABS */}
+          <nav className="w-full max-w-5xl flex gap-2 glass-panel p-2 rounded-2xl mb-8 z-10 flex-wrap">
+            {[
+              { id: 'decks', label: t.tabDecks },
+              { id: 'pomodoro', label: t.tabPomodoro },
+              { id: 'analytics', label: t.tabAnalytics },
+              { id: 'badges', label: t.tabBadges }
+            ].map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => { feedback.playClick(700); setActiveTab(tab.id); }}
+                className={`flex-1 py-3.5 rounded-xl font-bold text-sm transition ${activeTab === tab.id ? 'theme-btn text-white shadow-xl border border-white/20' : 'text-gray-400 hover:text-white'}`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </nav>
+
+          {/* MAIN TAB CONTENT */}
+          <main className="w-full max-w-5xl z-10">
+            {activeTab === 'decks' && (
+              <div>
+                {!reviewDeckId ? (
+                  <div>
+                    <div className="flex flex-wrap gap-3 mb-6 justify-between items-center">
+                      <h2 className="text-lg font-bold text-white flex items-center gap-2"><span>📚</span> {t.decksTitle}</h2>
+                      <div className="flex gap-2 flex-wrap">
+                        <button onClick={exportBackupJSON} className="px-3.5 py-2.5 bg-emerald-600/30 border border-emerald-500/40 text-emerald-200 font-bold text-xs rounded-xl hover:bg-emerald-600/50 transition">{t.exportData}</button>
+                        <label className="px-3.5 py-2.5 bg-amber-600/30 border border-amber-500/40 text-amber-200 font-bold text-xs rounded-xl hover:bg-amber-600/50 transition cursor-pointer">
+                          {t.importData}
+                          <input type="file" accept=".json" onChange={importBackupJSON} className="hidden" />
+                        </label>
+                        <button onClick={() => { feedback.playClick(); setIsAddDeckOpen(true); }} className="px-3.5 py-2.5 bg-white/5 border border-white/10 text-gray-300 font-bold text-xs rounded-xl hover:bg-white/10 transition">➕ {t.newDeckBtn}</button>
+                        <button onClick={() => { feedback.playClick(); if (decks.length === 0) { alert(lang === 'ar' ? 'أنشئ مجموعة أولاً!' : (lang === 'fr' ? 'Créez d\'abord un paquet !' : 'Create a deck first!')); return; } setSelectedDeckForNewCard(decks[0].id); setIsImportOpen(true); }} className="px-3.5 py-2.5 bg-amber-600/30 border border-amber-500/40 text-amber-200 font-bold text-xs rounded-xl hover:bg-amber-600/50 transition">{t.importBtn}</button>
+                        <button onClick={() => { feedback.playClick(); if (decks.length === 0) { alert(lang === 'ar' ? 'أنشئ مجموعة أولاً!' : (lang === 'fr' ? 'Créez d\'abord un paquet !' : 'Create a deck first!')); return; } setSelectedDeckForNewCard(decks[0].id); setIsAiGenOpen(true); }} className="px-3.5 py-2.5 bg-purple-600/30 border border-purple-400/30 text-purple-200 font-bold text-xs rounded-xl hover:bg-purple-600/50 transition">{t.aiGeneratorBtn}</button>
+                        <button onClick={() => { feedback.playClick(); if (decks.length === 0) { alert(lang === 'ar' ? 'أنشئ مجموعة أولاً!' : (lang === 'fr' ? 'Créez d\'abord un paquet !' : 'Create a deck first!')); return; } setSelectedDeckForNewCard(decks[0].id); setIsAddCardOpen(true); }} className="px-3.5 py-2.5 theme-btn text-white font-bold text-xs rounded-xl shadow-lg">➕ {t.addCardBtn}</button>
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      {decks.map((deck) => {
+                        const diff = getDeckDifficulty(deck);
+                        const dueCount = deck.cards.filter(isCardDue).length;
+                        return (
+                          <div key={deck.id} className="glass-panel glass-panel-hover rounded-3xl p-6 transition shadow-2xl flex flex-col justify-between border border-white/10">
+                            <div>
+                              <div className="flex justify-between items-start mb-2 gap-2 flex-wrap">
+                                <h3 className="font-bold text-xl text-white">{deck.title}</h3>
+                                <div className="flex gap-1.5 flex-wrap justify-end">
+                                  {dueCount > 0 && (
+                                    <span className="px-3 py-1 bg-amber-500/15 text-amber-300 text-xs font-semibold rounded-full border border-amber-500/30">🔔 {dueCount} {t.dueTodayBadge}</span>
+                                  )}
+                                  <span className="px-3 py-1 theme-bg-alpha theme-text text-xs font-semibold rounded-full border theme-border">{deck.cards.length} {t.cardsCount}</span>
+                                </div>
+                              </div>
+                              <p className="text-sm text-gray-400 leading-relaxed mb-4">{deck.description}</p>
+                              
+                              <div className="mb-6">
+                                <div className="flex justify-between text-[11px] font-bold text-gray-400 mb-1">
+                                  <span>{t.difficultyIndex}</span>
+                                  <span className={diff > 60 ? 'text-red-400' : 'text-emerald-400'}>{diff}%</span>
+                                </div>
+                                <div className="w-full bg-white/5 h-1.5 rounded-full overflow-hidden border border-white/10">
+                                  <div className={`h-full transition-all ${diff > 60 ? 'bg-red-500' : 'bg-emerald-500'}`} style={{ width: `${diff}%` }}></div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div className="space-y-2">
+                              <div className="flex gap-2">
+                                <button onClick={() => startReview(deck.id, false, false, true)} className="flex-1 py-3 theme-btn text-white font-bold rounded-2xl transition shadow-lg text-xs">{t.startReview}</button>
+                                <button onClick={() => startReview(deck.id, true, false, true)} className="px-3 py-3 bg-amber-500/20 border border-amber-500/40 text-amber-200 rounded-2xl font-bold text-xs" title={t.timeAttackReview}>⚡</button>
+                                <button onClick={() => startReview(deck.id, false, true, true)} className="px-3 py-3 bg-cyan-500/20 border border-cyan-500/40 text-cyan-200 rounded-2xl font-bold text-xs" title={t.audioModeReview}>🎧</button>
+                              </div>
+                              <button onClick={() => startReview(deck.id, false, false, false)} className="w-full text-center text-[11px] text-gray-400 hover:text-gray-200 underline underline-offset-2">
+                                {t.reviewAllCardsBtn} ({deck.cards.length})
+                              </button>
+                              <div className="flex gap-2 flex-wrap">
+                                <button onClick={() => { feedback.playClick(); setManageDeckId(deck.id); setCardSearchQuery(''); }} className="flex-1 py-2 bg-white/5 border border-white/10 text-gray-300 rounded-xl font-bold text-[11px]" title={t.manageCards}>🗂️</button>
+                                <button onClick={() => { feedback.playClick(); setSelectedDeckForNewCard(deck.id); setIsAddCardOpen(true); }} className="flex-1 py-2 bg-white/5 border border-white/10 text-gray-300 rounded-xl font-bold text-[11px]">➕ {t.addCardBtn}</button>
+                                <button onClick={() => exportDeckJSON(deck)} className="flex-1 py-2 bg-white/5 border border-white/10 text-gray-300 rounded-xl font-bold text-[11px]" title={t.exportDeckBtn}>💾</button>
+                                <button onClick={() => handleDeleteDeck(deck.id, deck.title)} className="px-3 py-2 bg-red-500/10 hover:bg-red-500/20 border border-red-500/20 text-red-400 rounded-xl font-bold text-xs transition" title={t.deleteDeck}>🗑️</button>
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                ) : (
+                  /* FLASHCARD REVIEW VIEW WITH SWIPE & SKIP MECHANISM */
+                  <div className="flex flex-col items-center">
+                    {(() => {
+                      const currentDeck = decks.find(d => d.id === reviewDeckId);
+                      const card = currentDeck?.cards.find(c => c.id === reviewCardIds[currentCardIdx]);
+                      if (!card) return null;
+                      return (
+                        <div className="w-full max-w-2xl">
+                          <div className="flex justify-between items-center mb-3 text-xs font-semibold text-gray-400 px-1">
+                            <span className="theme-text">{currentCardIdx + 1} / {reviewCardIds.length}</span>
+                            {isTimeAttack && (
+                              <span className="bg-red-500/20 text-red-300 border border-red-500/40 px-3 py-1 rounded-full font-mono font-bold animate-pulse">
+                                ⏱️ {timeAttackSeconds}s
+                              </span>
+                            )}
+                            {isAudioMode && (
+                              <span className="bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 px-3 py-1 rounded-full font-bold animate-bounce">
+                                {t.audioModeActive}
+                              </span>
+                            )}
+                            <button onClick={() => { feedback.playClick(); setReviewDeckId(null); setIsAudioMode(false); }} className="hover:text-white bg-white/5 px-3 py-1 rounded-lg border border-white/10">{t.cancelReview}</button>
+                          </div>
+
+                          <div className="w-full bg-white/5 h-2 rounded-full mb-6 overflow-hidden border border-white/10 p-0.5">
+                            <div className="theme-btn h-full rounded-full transition-all" style={{ width: `${((currentCardIdx + 1) / reviewCardIds.length) * 100}%` }}></div>
+                          </div>
+
+                          {/* Swipeable Card Container */}
+                          <div 
+                            onTouchStart={handleTouchStart}
+                            onTouchMove={handleTouchMove}
+                            onTouchEnd={handleTouchEnd}
+                            onClick={() => { feedback.playFlip(); setIsFlipped(!isFlipped); }} 
+                            className="w-full min-h-[300px] glass-panel rounded-3xl p-10 flex flex-col justify-center items-center text-center cursor-pointer hover:border-white/30 transition shadow-2xl relative select-none"
+                          >
+                            <span className="absolute top-5 right-5 text-xs font-bold theme-text theme-bg-alpha px-3 py-1 rounded-full border theme-border">{isFlipped ? t.cardBack : t.cardFront}</span>
+                            {!isFlipped && card.image && (
+                              <img src={card.image} alt="" onError={(e) => { e.target.style.display = 'none'; }} className="max-h-40 max-w-full object-contain rounded-xl mb-4 border border-white/10" />
+                            )}
+                            <p className="text-2xl font-semibold leading-relaxed text-gray-100 max-w-lg">{isFlipped ? card.back : card.front}</p>
+                            
+                            <button 
+                              onClick={(e) => { e.stopPropagation(); speakText(isFlipped ? card.back : card.front); }} 
+                              className="mt-4 px-3 py-1.5 bg-white/10 hover:bg-white/20 border border-white/20 text-gray-200 text-xs rounded-xl font-bold transition flex items-center gap-1"
+                            >
+                              {t.speakCard}
+                            </button>
+
+                            <p className="text-xs text-gray-400/80 mt-6 font-medium">{t.flipHint}</p>
+                          </div>
+
+                          {isAudioMode && (
+                            <div className="mt-4 text-center">
+                              <button onClick={() => setIsAudioMode(false)} className="px-4 py-2 bg-red-500/20 border border-red-500/40 text-red-300 rounded-xl font-bold text-xs">
+                                {t.stopAudioMode}
+                              </button>
+                            </div>
+                          )}
+
+                          {isFlipped && (
+                            <div className="grid grid-cols-4 gap-3 mt-6">
+                              <button onClick={() => handleRateCard(0)} className="py-3.5 bg-red-500/15 border border-red-500/30 text-red-300 rounded-2xl font-bold text-xs">{t.again}</button>
+                              <button onClick={() => handleRateCard(3)} className="py-3.5 bg-amber-500/15 border border-amber-500/30 text-amber-300 rounded-2xl font-bold text-xs">{t.hard}</button>
+                              <button onClick={() => handleRateCard(4)} className="py-3.5 bg-blue-500/15 border border-blue-500/30 text-blue-300 rounded-2xl font-bold text-xs">{t.good}</button>
+                              <button onClick={() => handleRateCard(5)} className="py-3.5 bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 rounded-2xl font-bold text-xs">{t.easy}</button>
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })()}
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* POMODORO TIMER */}
+            {activeTab === 'pomodoro' && (
+              <div className="flex flex-col items-center">
+                <div className="glass-panel rounded-3xl p-8 md:p-10 w-full max-w-lg text-center shadow-2xl border border-white/10">
+                  <div className="flex justify-center gap-2 mb-4 bg-white/5 p-1.5 rounded-2xl border border-white/10">
+                    {[
+                      { id: 'focus', label: t.focusMode, defaultM: 25 },
+                      { id: 'short', label: t.shortBreakMode, defaultM: 5 },
+                      { id: 'long', label: t.longBreakMode, defaultM: 15 }
+                    ].map((mode) => (
+                      <button 
+                        key={mode.id} 
+                        onClick={() => { 
+                          feedback.playClick(600); 
+                          setTimerMode(mode.id); 
+                          handleMinutesChange(mode.defaultM); 
+                        }} 
+                        className={`flex-1 py-2.5 rounded-xl text-xs font-bold transition ${timerMode === mode.id ? 'theme-btn text-white shadow-lg' : 'text-gray-400'}`}
+                      >
+                        {mode.label}
+                      </button>
+                    ))}
+                  </div>
+
+                  <div className="text-xs font-bold theme-text mb-6 theme-bg-alpha py-1.5 px-4 rounded-full inline-block border theme-border">
+                    🔄 {t.sessionCycle} #{(completedFocusSessions % 4) + 1} / 4
+                  </div>
+
+                  <div className="flex items-center justify-center gap-3 mb-6 bg-white/5 p-3 rounded-2xl border border-white/10">
+                    <span className="text-xs font-bold theme-text">{t.customTime}</span>
+                    <input 
+                      type="number" 
+                      min="1" 
+                      max="180" 
+                      value={customMinutes} 
+                      onChange={(e) => handleMinutesChange(e.target.value)}
+                      className="w-16 bg-black/40 border theme-border text-center font-bold text-white rounded-xl py-1 text-sm focus:outline-none"
+                    />
+                    <span className="text-xs text-gray-400 font-semibold">{t.minutes}</span>
+                  </div>
+
+                  <div className="relative w-64 h-64 mx-auto flex items-center justify-center mb-8 border-4 theme-border rounded-full shadow-inner bg-black/20">
+                    <span className="text-6xl font-mono font-extrabold text-white tracking-wider">{formatTime(timeLeft)}</span>
+                  </div>
+
+                  <div className="flex gap-3">
+                    <button 
+                      onClick={() => { feedback.playClick(); setIsTimerRunning(!isTimerRunning); }} 
+                      className={`flex-1 py-4 rounded-2xl font-extrabold text-lg transition shadow-xl ${isTimerRunning ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40' : 'theme-btn text-white'}`}
+                    >
+                      {isTimerRunning ? t.pauseTimer : t.startTimer}
+                    </button>
+                    <button 
+                      onClick={() => { feedback.playClick(400); handleMinutesChange(customMinutes); }} 
+                      className="px-4 py-4 bg-white/5 border border-white/10 text-gray-300 font-bold rounded-2xl hover:bg-white/10 transition"
+                      title={t.resetTimer}
+                    >
+                      🔄
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* ANALYTICS TAB */}
+            {activeTab === 'analytics' && (
+              <div className="space-y-6">
+                <div className="glass-panel rounded-3xl p-6 border border-white/10">
+                  <div className="flex justify-between items-center mb-4 flex-wrap gap-2">
+                    <h3 className="text-sm font-bold text-white flex items-center gap-2"><span>🎯</span> {t.cardsBreakdown}</h3>
+                    <div className="flex gap-2 flex-wrap">
+                      {retentionPercentage !== null && (
+                        <span className="text-xs font-bold text-cyan-300 bg-cyan-500/10 px-3 py-1 rounded-full border border-cyan-500/30">
+                          {t.retentionRate} {retentionPercentage}%
+                        </span>
+                      )}
+                      <span className="text-xs font-bold text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/30">
+                        {t.masteryRate} {masteryPercentage}%
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="w-full h-3 bg-white/5 rounded-full overflow-hidden flex p-0.5 border border-white/10 mb-6">
+                    <div style={{ width: `${totalCardsCount > 0 ? (newCardsCount / totalCardsCount) * 100 : 0}%` }} className="bg-blue-500 h-full transition-all"></div>
+                    <div style={{ width: `${totalCardsCount > 0 ? (learningCardsCount / totalCardsCount) * 100 : 0}%` }} className="bg-amber-500 h-full transition-all"></div>
+                    <div style={{ width: `${totalCardsCount > 0 ? (masteredCardsCount / totalCardsCount) * 100 : 0}%` }} className="bg-emerald-500 h-full transition-all"></div>
+                  </div>
+
+                  <div className="grid grid-cols-3 gap-3 text-center">
+                    <div className="bg-blue-500/10 border border-blue-500/20 p-3 rounded-2xl">
+                      <span className="text-xl font-bold text-blue-400 block">{newCardsCount}</span>
+                      <span className="text-[11px] text-gray-400">{t.newCards}</span>
+                    </div>
+                    <div className="bg-amber-500/10 border border-amber-500/20 p-3 rounded-2xl">
+                      <span className="text-xl font-bold text-amber-400 block">{learningCardsCount}</span>
+                      <span className="text-[11px] text-gray-400">{t.learningCards}</span>
+                    </div>
+                    <div className="bg-emerald-500/10 border border-emerald-500/20 p-3 rounded-2xl">
+                      <span className="text-xl font-bold text-emerald-400 block">{masteredCardsCount}</span>
+                      <span className="text-[11px] text-gray-400">{t.masteredCards}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="glass-panel rounded-3xl p-6 border border-white/10">
+                  <div className="flex justify-between items-center mb-6">
+                    <h3 className="text-sm font-bold theme-text flex items-center gap-2">
+                      {t.weeklyActivity}
+                    </h3>
+                    <div className="flex gap-4 text-xs font-semibold">
+                      <div className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-full theme-btn inline-block"></span> <span className="text-gray-400">{t.legendMinutes}</span></div>
+                      <div className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-full bg-cyan-400 inline-block"></span> <span className="text-gray-400">{t.legendCards}</span></div>
+                    </div>
+                  </div>
+                  
+                  <div className="h-52 flex items-end justify-between gap-3 pt-8 pb-2 px-2">
+                    {safeWeeklyMins.map((minVal, idx) => {
+                      const cardVal = safeWeeklyCards[idx] || 0;
+                      const minHeight = Math.min(100, Math.max(8, (minVal / maxWeeklyMinsVal) * 100));
+                      const cardHeight = Math.min(100, Math.max(8, (cardVal / maxWeeklyCardsVal) * 100));
+                      const isToday = idx === new Date().getDay();
+
+                      return (
+                        <div key={idx} className="flex-1 flex flex-col items-center h-full justify-end group">
+                          <div className="flex gap-1 items-end h-full w-full justify-center">
+                            <div 
+                              className={`w-1/2 max-w-[16px] rounded-t-lg transition-all duration-500 ${isToday ? 'theme-btn shadow-lg' : 'opacity-40 theme-btn group-hover:opacity-70'}`}
+                              style={{ height: `${minHeight}%` }}
+                              title={`${minVal} ${t.minutes}`}
+                            ></div>
+                            <div 
+                              className={`w-1/2 max-w-[16px] rounded-t-lg transition-all duration-500 ${isToday ? 'bg-gradient-to-t from-cyan-600 to-cyan-400 shadow-lg shadow-cyan-500/30' : 'bg-cyan-500/30 group-hover:bg-cyan-400/60'}`}
+                              style={{ height: `${cardHeight}%` }}
+                              title={`${cardVal} ${t.cardsCount}`}
+                            ></div>
+                          </div>
+                          <span className={`text-xs mt-3 font-semibold ${isToday ? 'theme-text font-bold' : 'text-gray-400'}`}>
+                            {t.weekDays[idx]}
+                          </span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* BADGES & TROPHIES TAB */}
+            {activeTab === 'badges' && (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {trophiesList.map((tr) => (
+                  <div key={tr.id} className={`glass-panel rounded-3xl p-5 border transition flex items-center gap-4 ${tr.unlocked ? 'border-amber-500/40 bg-amber-500/5' : 'border-white/5 opacity-50'}`}>
+                    <div className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-3xl shadow-inner">
+                      {tr.icon}
+                    </div>
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <h4 className="font-bold text-white text-base">{tr.title}</h4>
+                        {tr.unlocked && <span className="text-[10px] bg-amber-500/20 text-amber-300 border border-amber-500/30 px-2 py-0.5 rounded-full font-bold">{t.unlockedTag}</span>}
+                      </div>
+                      <p className="text-xs text-gray-400 mt-1">{tr.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </main>
+
+          {/* MODAL: MANAGE CARDS (search / edit / delete) */}
+          {manageDeckId && (() => {
+            const manageDeck = decks.find(d => d.id === manageDeckId);
+            if (!manageDeck) return null;
+            const query = cardSearchQuery.trim().toLowerCase();
+            const filteredCards = query
+              ? manageDeck.cards.filter(c => c.front.toLowerCase().includes(query) || c.back.toLowerCase().includes(query))
+              : manageDeck.cards;
+            return (
+              <div className="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 z-50">
+                <div className="glass-panel border border-white/20 rounded-3xl p-6 w-full max-w-2xl shadow-2xl max-h-[85vh] flex flex-col">
+                  <div className="flex justify-between items-center mb-4">
+                    <h3 className="text-lg font-bold text-white">{t.manageCards} — {manageDeck.title}</h3>
+                    <button onClick={() => { setManageDeckId(null); setEditingCardId(null); }} className="px-3 py-1.5 bg-white/5 border border-white/10 text-gray-300 rounded-lg text-xs font-bold">{t.closeBtn} ✕</button>
+                  </div>
+
+                  <input
+                    type="text"
+                    value={cardSearchQuery}
+                    onChange={(e) => setCardSearchQuery(e.target.value)}
+                    placeholder={t.searchCardsPlaceholder}
+                    className="w-full bg-white/5 border border-white/10 rounded-xl p-3 text-sm text-white mb-4 focus:outline-none focus:border-white/40"
+                  />
+
+                  <div className="overflow-y-auto space-y-3 pr-1">
+                    {filteredCards.length === 0 && (
+                      <p className="text-center text-sm text-gray-500 py-8">{t.noCardsFound}</p>
+                    )}
+                    {filteredCards.map(card => (
+                      <div key={card.id} className="bg-white/5 border border-white/10 rounded-2xl p-4">
+                        {editingCardId === card.id ? (
+                          <EditCardForm
+                            card={card}
+                            t={t}
+                            onSave={(f, b, img) => handleUpdateCard(manageDeck.id, card.id, f, b, img)}
+                            onCancel={() => setEditingCardId(null)}
+                          />
+                        ) : (
+                          <div className="flex justify-between items-start gap-3">
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center gap-2 flex-wrap mb-1">
+                                {isCardDue(card) && <span className="text-[10px] bg-amber-500/15 text-amber-300 border border-amber-500/30 px-2 py-0.5 rounded-full font-bold">{t.dueTodayBadge}</span>}
+                              </div>
+                              {card.image && <img src={card.image} alt="" onError={(e) => { e.target.style.display = 'none'; }} className="max-h-20 rounded-lg mb-2 border border-white/10" />}
+                              <p className="text-sm text-gray-100 font-semibold break-words">{card.front}</p>
+                              <p className="text-xs text-gray-400 mt-1 break-words">{card.back}</p>
+                            </div>
+                            <div className="flex gap-1.5 shrink-0">
+                              <button onClick={() => setEditingCardId(card.id)} className="px-2.5 py-1.5 bg-white/10 hover:bg-white/20 text-gray-200 rounded-lg text-[11px] font-bold">{t.editCard}</button>
+                              <button onClick={() => handleDeleteCard(manageDeck.id, card.id, card.front)} className="px-2.5 py-1.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 rounded-lg text-[11px] font-bold">{t.deleteCard}</button>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* MODAL: ADD CARD */}
+          {isAddCardOpen && (
+            <div className="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 z-50">
+              <div className="glass-panel border border-white/20 rounded-3xl p-6 w-full max-w-md shadow-2xl">
+                <h3 className="text-lg font-bold text-white mb-4">{t.addCardTitle}</h3>
+                <form onSubmit={handleAddCard} className="space-y-4">
+                  <div>
+                    <label className="block text-xs text-gray-300 mb-1">{t.selectDeck}</label>
+                    <select value={selectedDeckForNewCard} onChange={(e) => setSelectedDeckForNewCard(e.target.value)} className="w-full bg-white/5 border border-white/10 rounded-xl p-3 text-sm text-white focus:outline-none">
+                      {decks.map(d => <option key={d.id} value={d.id} className="bg-gray-900 text-white">{d.title}</option>)}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-xs text-gray-300 mb-1">{t.frontLabel}</label>
+                    <textarea required value={newFront} onChange={(e) => setNewFront(e.target.value)} rows="3" className="w-full bg-white/5 border border-white/10 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-white/40" />
+                  </div>
+                  <div>
+                    <label className="block text-xs text-gray-300 mb-1">{t.backLabel}</label>
+                    <textarea required value={newBack} onChange={(e) => setNewBack(e.target.value)} rows="3" className="w-full bg-white/5 border border-white/10 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-white/40" />
+                  </div>
+                  <div>
+                    <label className="block text-xs text-gray-300 mb-1">{t.imageUrlLabel}</label>
+                    <input type="url" value={newCardImage} onChange={(e) => setNewCardImage(e.target.value)} placeholder="https://..." className="w-full bg-white/5 border border-white/10 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-white/40" />
+                  </div>
+                  <div className="flex gap-2 pt-2">
+                    <button type="submit" className="flex-1 py-3 theme-btn text-white font-bold text-xs rounded-xl shadow-lg">{t.saveCard}</button>
+                    <button type="button" onClick={() => { if (confirmDiscard(newFront.trim() || newBack.trim() || newCardImage.trim())) { setNewFront(''); setNewBack(''); setNewCardImage(''); setIsAddCardOpen(false); } }} className="px-4 py-3 bg-white/5 border border-white/10 text-gray-400 font-bold text-xs rounded-xl">{t.cancel}</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          )}
+
+          {/* MODAL: AI GENERATOR */}
+          {isAiGenOpen && (
+            <div className="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 z-50">
+              <div className="glass-panel border border-white/20 rounded-3xl p-6 w-full max-w-lg shadow-2xl max-h-[90vh] overflow-y-auto">
+                <h3 className="text-lg font-bold text-white mb-2">{t.aiGenTitle}</h3>
+                <p className="text-xs text-gray-400 mb-4">{t.aiGenHint}</p>
+
+                {/* STEP 1: copy the fixed prompt to use in the user's own AI tool */}
+                <div className="mb-5 bg-white/5 border border-white/10 rounded-2xl p-4">
+                  <p className="text-xs font-bold text-purple-300 mb-2">{t.aiStep1Title}</p>
+                  <p className="text-[11px] text-gray-400 mb-3 leading-relaxed">{t.aiStep1Desc}</p>
+                  <textarea
+                    readOnly
+                    value={t.aiPromptTemplate}
+                    rows="6"
+                    onFocus={(e) => e.target.select()}
+                    className="w-full bg-black/20 border border-white/10 rounded-xl p-3 text-[11px] font-mono text-gray-300 focus:outline-none resize-none"
+                  />
+                  <button type="button" onClick={handleCopyAiPrompt} className="mt-2 w-full py-2.5 bg-purple-600/30 border border-purple-400/40 text-purple-200 font-bold text-xs rounded-xl hover:bg-purple-600/50 transition">
+                    {promptCopied ? t.promptCopiedMsg : t.copyPromptBtn}
+                  </button>
+                </div>
+
+                {/* STEP 2: paste back whatever the external AI replied with */}
+                <form onSubmit={handleAiGenerateCards} className="space-y-4">
+                  <div>
+                    <p className="text-xs font-bold text-cyan-300 mb-1">{t.aiStep2Title}</p>
+                    <p className="text-[11px] text-gray-400 mb-2 leading-relaxed">{t.aiStep2Desc}</p>
+                  </div>
+                  <div>
+                    <label className="block text-xs text-gray-300 mb-1">{t.selectDeck}</label>
+                    <select value={selectedDeckForNewCard} onChange={(e) => setSelectedDeckForNewCard(e.target.value)} className="w-full bg-white/5 border border-white/10 rounded-xl p-3 text-sm text-white focus:outline-none">
+                      {decks.map(d => <option key={d.id} value={d.id} className="bg-gray-900 text-white">{d.title}</option>)}
+                    </select>
+                  </div>
+                  <div>
+                    <textarea 
+                      required 
+                      value={aiSourceText} 
+                      onChange={(e) => setAiSourceText(e.target.value)} 
+                      rows="6" 
+                      placeholder={t.aiGenPlaceholder}
+                      className="w-full bg-white/5 border border-white/10 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-white/40" 
+                    />
+                  </div>
+                  <div className="flex gap-2 pt-2">
+                    <button type="submit" className="flex-1 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold text-xs rounded-xl shadow-lg shadow-purple-600/30">{t.convertToCardsBtn}</button>
+                    <button type="button" onClick={() => { if (confirmDiscard(aiSourceText.trim())) { setAiSourceText(''); setIsAiGenOpen(false); } }} className="px-4 py-3 bg-white/5 border border-white/10 text-gray-400 font-bold text-xs rounded-xl">{t.cancel}</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          )}
+
+          {/* MODAL: IMPORT CARDS (CSV/JSON) */}
+          {isImportOpen && (
+            <div className="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 z-50">
+              <div className="glass-panel border border-white/20 rounded-3xl p-6 w-full max-w-lg shadow-2xl">
+                <h3 className="text-lg font-bold text-white mb-2">{t.importTitle}</h3>
+                <p className="text-xs text-gray-400 mb-4">{t.importHint}</p>
+                <form onSubmit={handleProcessImport} className="space-y-4">
+                  <div>
+                    <label className="block text-xs text-gray-300 mb-1">{t.selectDeck}</label>
+                    <select value={selectedDeckForNewCard} onChange={(e) => setSelectedDeckForNewCard(e.target.value)} className="w-full bg-white/5 border border-white/10 rounded-xl p-3 text-sm text-white focus:outline-none">
+                      {decks.map(d => <option key={d.id} value={d.id} className="bg-gray-900 text-white">{d.title}</option>)}
+                    </select>
+                  </div>
+                  <div>
+                    <textarea
+                      required
+                      value={importText}
+                      onChange={(e) => setImportText(e.target.value)}
+                      rows="6"
+                      placeholder={'[{"front":"Q","back":"A"}]  —  or —  Q1,A1'}
+                      className="w-full bg-white/5 border border-white/10 rounded-xl p-3 text-sm text-white font-mono focus:outline-none focus:border-white/40"
+                    />
+                  </div>
+                  <div className="flex gap-2 pt-2">
+                    <button type="submit" className="flex-1 py-3 bg-amber-600 text-white font-bold text-xs rounded-xl shadow-lg">{t.processImport}</button>
+                    <button type="button" onClick={() => { if (confirmDiscard(importText.trim())) { setImportText(''); setIsImportOpen(false); } }} className="px-4 py-3 bg-white/5 border border-white/10 text-gray-400 font-bold text-xs rounded-xl">{t.cancel}</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          )}
+
+          {/* MODAL: ADD DECK */}
+          {isAddDeckOpen && (
+            <div className="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 z-50">
+              <div className="glass-panel border border-white/20 rounded-3xl p-6 w-full max-w-md shadow-2xl">
+                <h3 className="text-lg font-bold text-white mb-4">{t.addDeckTitle}</h3>
+                <form onSubmit={handleAddDeck} className="space-y-4">
+                  <div>
+                    <label className="block text-xs text-gray-300 mb-1">{t.deckNameLabel}</label>
+                    <input type="text" required value={newDeckTitle} onChange={(e) => setNewDeckTitle(e.target.value)} className="w-full bg-white/5 border border-white/10 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-white/40" />
+                  </div>
+                  <div>
+                    <label className="block text-xs text-gray-300 mb-1">{t.deckDescLabel}</label>
+                    <textarea value={newDeckDesc} onChange={(e) => setNewDeckDesc(e.target.value)} rows="2" className="w-full bg-white/5 border border-white/10 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-white/40" />
+                  </div>
+                  <div className="flex gap-2 pt-2">
+                    <button type="submit" className="flex-1 py-3 theme-btn text-white font-bold text-xs rounded-xl shadow-lg">{t.createDeck}</button>
+                    <button type="button" onClick={() => { if (confirmDiscard(newDeckTitle.trim() || newDeckDesc.trim())) { setNewDeckTitle(''); setNewDeckDesc(''); setIsAddDeckOpen(false); } }} className="px-4 py-3 bg-white/5 border border-white/10 text-gray-400 font-bold text-xs rounded-xl">{t.cancel}</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          )}
+
+          {/* MODAL: USER GUIDE */}
+          {isGuideOpen && (
+            <div className="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 z-50">
+              <div className="glass-panel border border-white/20 rounded-3xl p-6 w-full max-w-lg shadow-2xl max-h-[85vh] overflow-y-auto">
+                <h3 className="text-xl font-extrabold text-white mb-4 flex items-center gap-2">
+                  <span>🚀</span> {t.guideTitle}
+                </h3>
+                
+                <div className="space-y-4 text-xs leading-relaxed text-gray-300">
+                  <div className="bg-white/5 p-4 rounded-2xl border border-white/10">
+                    <h4 className="font-bold theme-text text-sm mb-1">{t.guideSec1Title}</h4>
+                    <p>{t.guideSec1Desc}</p>
+                  </div>
+
+                  <div className="bg-white/5 p-4 rounded-2xl border border-white/10">
+                    <h4 className="font-bold text-indigo-300 text-sm mb-1">{t.guideSec2Title}</h4>
+                    <p>{t.guideSec2Desc}</p>
+                  </div>
+
+                  <div className="bg-white/5 p-4 rounded-2xl border border-white/10">
+                    <h4 className="font-bold text-emerald-300 text-sm mb-1">{t.guideSec3Title}</h4>
+                    <p>{t.guideSec3Desc}</p>
+                  </div>
+
+                  <div className="bg-white/5 p-4 rounded-2xl border border-white/10">
+                    <h4 className="font-bold text-cyan-300 text-sm mb-1">{t.guideSec4Title}</h4>
+                    <p>{t.guideSec4Desc}</p>
+                  </div>
+                </div>
+
+                <div className="mt-6 text-center">
+                  <button onClick={() => setIsGuideOpen(false)} className="w-full py-3 theme-btn text-white font-bold text-xs rounded-xl shadow-lg">{t.guideUnderstandBtn}</button>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+
+  <!-- Plain (non-Babel) script: registers the service worker for offline
+       support and installability. Requires the file to be served over HTTPS
+       (or localhost) — browsers block service workers on file:// pages, so
+       this silently does nothing if opened directly from disk instead of
+       from a hosted URL. -->
+  <script>
+    if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./service-worker.js')
+          .catch((err) => console.warn('Service worker registration failed:', err));
+      });
+    }
+  </script>
+</body>
+</html>
